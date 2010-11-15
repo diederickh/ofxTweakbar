@@ -1,0 +1,31 @@
+ofxTweakbar
+===========
+AntTweakbar addon for openFrameworks. AntTweakbar is a clean, small and simple
+GUI system designed to tweak parameters. This is a must have GUI when you need
+to tweak certain parameters in your app. The addon is designed to be as clear
+and versatile as possible.
+
+
+Compiling AntTweakbar on MacOS (static lib)
+============================================
+Copy the Makefile.osx in the src directory of AntTweakbar to Makefile
+
+Change lines to this: (just check the variables)
++++++++++++++++++++++++++++++++++++++++++++++++++
+SO_EXT		= .a
+CXXCFG   	= -O3 -arch i386 -arch x86_64 
+LFLAGS		= -arch i386 -arch x86_64 
+
+At the bottom change this:
++++++++++++++++++++++++++
+$(TARGET): $(OBJS)
+	@echo "====== Archive $@ ==========="
+	$(AR) $(OUT_DIR)/lib$(TARGET)$(SO_EXT) $(OBJS)
+
+
+I've put the Makefile in the "doc" directory.
+
+
+Small / simple example
+======================
+
