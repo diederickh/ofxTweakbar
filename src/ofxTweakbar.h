@@ -7,7 +7,7 @@
 
 class ofxTweakbar {
 public:	
-	ofxTweakbar(std::string sName);
+	ofxTweakbar(std::string sName, std::string sTitle);
 	~ofxTweakbar();
 	ofxTweakbarFloat* addFloat(
 			 const char* pName
@@ -48,6 +48,7 @@ public:
 	
 	ofxTweakbar& setFontSize(int nSize = 1);
 	
+	ofxTweakbar& setLabel(std::string sLabel);
 	
 	std::map<const char*, ofxTweakbarType*> getVariables();
 	std::string getName();
@@ -55,6 +56,7 @@ public:
 	TwBar* getBar();
 	
 private:
+	std::string title;
 	std::string name;
 	TwBar* bar;
 	std::map<const char *, ofxTweakbarType*> variables;

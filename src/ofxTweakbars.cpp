@@ -19,7 +19,11 @@ ofxTweakbars::~ofxTweakbars() {
 }
 
 ofxTweakbar* ofxTweakbars::addTweakbar(std::string sName, std::string sTitle) {
-	ofxTweakbar* bar = new ofxTweakbar(sName);
+	ofxTweakbar* bar = new ofxTweakbar(sName, sTitle);
+
+	// some defaults.
+	bar->setColor(44,44,44,180)
+		.setFontSize(2);
 	bars[sName] = bar;
 	return bar;
 };

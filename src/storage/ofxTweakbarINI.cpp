@@ -23,6 +23,10 @@ void ofxTweakbarINI::store() {
 			ofxTweakbarInt* type_impl = static_cast<ofxTweakbarInt*>(it->second);
 			ini->setInt(section, type->getName(), type_impl->getValue());
 		}
+		else if (tw_type == TW_TYPE_FLOAT) {
+			ofxTweakbarFloat* type_impl = static_cast<ofxTweakbarFloat*>(it->second);
+			ini->setFloat(section, type->getName(), type_impl->getValue());
+		}
 		else if (tw_type == TW_TYPE_BOOLCPP) {
 			ofxTweakbarBool* type_impl = static_cast<ofxTweakbarBool*>(it->second);
 			ini->setBool(section, type->getName(), type_impl->getValue());
@@ -36,7 +40,6 @@ void ofxTweakbarINI::store() {
 			ofxTweakbarVec3f* type_impl = static_cast<ofxTweakbarVec3f*>(it->second);
 			IniVec3f v(type_impl->getX(), type_impl->getY(), type_impl->getZ());
 			ini->setVec3f(section, type->getName(), v);
-
 		}
 		++it;
 	}
@@ -56,6 +59,12 @@ void ofxTweakbarINI::retrieve() {
 		if(tw_type == TW_TYPE_INT32) {
 			ofxTweakbarInt* type_impl = static_cast<ofxTweakbarInt*>(it->second);
 			int i = ini->getInt(section, type->getName(), 0);
+			type_impl->setValue(i);
+		}
+		else if (tw_type == TW_TYPE_FLOAT) {
+			ofxTweakbarFloat* type_impl = static_cast<ofxTweakbarFloat*>(it->second);
+			float f = ini->getFloat(section, type->getName(), false);
+			type_impl->setValue(f);
 		}
 		else if (tw_type == TW_TYPE_BOOLCPP) {
 			ofxTweakbarBool* type_impl = static_cast<ofxTweakbarBool*>(it->second);

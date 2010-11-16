@@ -1,10 +1,12 @@
 #include "ofxTweakbar.h"
 #include <sstream>
 #include "ofMain.h"
-ofxTweakbar::ofxTweakbar(std::string sName)
-:name(sName) // TODO maybe a bit redundant
+ofxTweakbar::ofxTweakbar(std::string sName, std::string sTitle)
+:name(sName) // TODO maybe a bit redundant (used by storages)
+,title(sTitle)
 {
 	bar = TwNewBar(sName.c_str());
+	setLabel(sTitle);
 }
 
 ofxTweakbar::~ofxTweakbar() {
@@ -14,7 +16,6 @@ ofxTweakbar::~ofxTweakbar() {
 		++it;
 	}
 }
-
 
 ofxTweakbar& ofxTweakbar::setSize(int nWidth, int nHeight) {
 	ostringstream oss;
@@ -37,6 +38,12 @@ ofxTweakbar& ofxTweakbar::setFontSize(int nSize) {
 	return *this;
 }
 
+ofxTweakbar& ofxTweakbar::setLabel(std::string sLabel) {
+	ostringstream oss;
+	oss << getName() << " label='" << sLabel << "'";
+	TwDefine(oss.str().c_str());
+	return *this;
+}
 
 TwBar* ofxTweakbar::getBar() {
 	return bar;
@@ -65,7 +72,6 @@ ofxTweakbarBool* ofxTweakbar::addBool(
 	variables[pName] = type;
 	return type;
 }
-
 
 ofxTweakbarInt* ofxTweakbar::addInt(
 		 const char* pName
