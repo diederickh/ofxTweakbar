@@ -2,7 +2,7 @@
 #include "ofxTweakbar.h"
 #include "ofxTweakbarTypes.h"
 
-#include "ofMain.h"
+//#include "ofMain.h"
 ofxTweakbarINI::ofxTweakbarINI(ofxTweakbar* pBar, ofxIniFile* pIni)
 	:ofxTweakbarStorage(pBar)
 	,ini(pIni)
