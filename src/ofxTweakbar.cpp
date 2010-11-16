@@ -1,10 +1,42 @@
 #include "ofxTweakbar.h"
+#include <sstream>
 #include "ofMain.h"
 ofxTweakbar::ofxTweakbar(std::string sName)
 :name(sName) // TODO maybe a bit redundant
 {
 	bar = TwNewBar(sName.c_str());
 }
+
+ofxTweakbar::~ofxTweakbar() {
+	std::map<const char *, ofxTweakbarType*>::iterator it =  variables.begin();
+	while(it != variables.end()) {
+		delete it->second;
+		++it;
+	}
+}
+
+
+ofxTweakbar& ofxTweakbar::setSize(int nWidth, int nHeight) {
+	ostringstream oss;
+	oss << getName() << " size='" << nWidth << " " << nHeight << "'";
+	TwDefine(oss.str().c_str());
+	return *this;
+}
+	
+ofxTweakbar& ofxTweakbar::setColor(int nR, int nG, int nB, int nAlpha) {
+	ostringstream oss;
+	oss << getName() << " color='" << nR << " " << nG << " " << nB << "' alpha=" << nAlpha;
+	TwDefine(oss.str().c_str());
+	return *this;
+}
+
+ofxTweakbar& ofxTweakbar::setFontSize(int nSize) {
+	ostringstream oss;
+	oss << getName() << " fontsize=" << nSize;
+	TwDefine(oss.str().c_str());
+	return *this;
+}
+
 
 TwBar* ofxTweakbar::getBar() {
 	return bar;
@@ -51,9 +83,10 @@ ofxTweakbarInt* ofxTweakbar::addInt(
 ofxTweakbarVec3f* ofxTweakbar::addVec3f(
 		const char* pName
 		,void *pValue
+		,const char* pDef 
 )
 {
-	TwAddVarRW(bar, pName, TW_TYPE_DIR3F, &pValue,"");
+	TwAddVarRW(bar, pName, TW_TYPE_DIR3F, &pValue,pDef);
 	ofxTweakbarVec3f* type = new ofxTweakbarVec3f(this, pName, pValue);
 	variables[pName] = type;
 	return type;
@@ -78,4 +111,15 @@ std::map<const char*, ofxTweakbarType*> ofxTweakbar::getVariables() {
 
 std::string ofxTweakbar::getName() {
 	return name;
+}
+
+ofxTweakbar& ofxTweakbar::close() {
+	std::string cmd = getName() +" iconified=true";
+	TwDefine(cmd.c_str());
+	return *this;
+}
+
+ofxTweakbar& ofxTweakbar::refresh() {
+	TwRefreshBar(getBar());
+	return *this;
 }

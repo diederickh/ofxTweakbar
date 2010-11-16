@@ -10,6 +10,14 @@ ofxTweakbars::ofxTweakbars()
 	setEventHandlers();
 }
 
+ofxTweakbars::~ofxTweakbars() {
+	std::map<std::string, ofxTweakbar*>::iterator it = bars.begin();
+	while(it != bars.end()) {
+		delete it->second;
+		it++;
+	}
+}
+
 ofxTweakbar* ofxTweakbars::addTweakbar(std::string sName, std::string sTitle) {
 	ofxTweakbar* bar = new ofxTweakbar(sName);
 	bars[sName] = bar;
@@ -24,15 +32,6 @@ void ofxTweakbars::draw() {
 void ofxTweakbars::toggle() {
 	visible = !visible;
 }
-
-void ofxTweakbars::test() {
-	// try to get the value back for label "value_a"
-	ofxTweakbar* b = bars["settings"];
-	float val;
-	TwGetParam(b->getBar(), NULL, "value_a", TW_PARAM_FLOAT,0,&val);
-	std::cout << "RETRIEVED VALUE_A: " << val << std::endl;
-}
-
 
 // EVENT HANDLERS
 //------------------------------------------------------------------------------

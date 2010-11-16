@@ -7,10 +7,10 @@ class ofxTweakbar;
 class ofxTweakbars {
 public:
 	ofxTweakbars();
+	~ofxTweakbars();
 	ofxTweakbar* addTweakbar(std::string sName, std::string sTitle);
 	void draw();
 	void toggle();
-	void test();
 private:
 	std::map<std::string, ofxTweakbar*> bars;
 	bool visible;

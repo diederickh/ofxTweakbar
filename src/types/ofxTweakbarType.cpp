@@ -54,7 +54,7 @@ ofxTweakbarType* ofxTweakbarType::setLabel(std::string sLabel) {
 	return this;
 }
 
-ofxTweakbarType* ofxTweakbarType::setGroup(std::string sGroup) {
+ofxTweakbarType* ofxTweakbarType::setGroup(std::string sGroup) {	
 	TwSetParam(bar->getBar(), name, "group", TW_PARAM_CSTRING, 1, sGroup.c_str());
 	properties["group"] = sGroup;
 	return this;

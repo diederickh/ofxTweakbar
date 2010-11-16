@@ -28,4 +28,7 @@ I've put the Makefile in the "doc" directory.
 
 Small / simple example
 ======================
-
+settings->addBool("boolean", &test_bool_a);
+settings->addInt("int32", &test_standard_int, "min=1 max=100 key=b");
+settings->addVec3f("test", &dir)->setGroup("color");
+settings->addColor3f("color3f", &colors)->setLabel("Colour")->setGroup("color");
