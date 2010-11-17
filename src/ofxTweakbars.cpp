@@ -16,10 +16,7 @@ ofxTweakbars::~ofxTweakbars() {
 		it++;
 	}
 }
-/*
-void ofxTweakbars::init() {
-}
-*/
+
 ofxTweakbar* ofxTweakbars::createTweakbar(std::string sName, std::string sTitle, bool bUseAutoStore) {
 	if(!instance.is_initialized) {
 		instance.init();
@@ -114,6 +111,5 @@ void ofxTweakbars::mouseDragged(ofMouseEventArgs& rArgs) {
 }
 
 void ofxTweakbars::windowResized(ofResizeEventArgs& rArgs) {
-	std::cout << "RESIZE!";
 	TwWindowSize(rArgs.width, rArgs.height);
 }
