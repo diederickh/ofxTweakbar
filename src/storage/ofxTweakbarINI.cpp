@@ -10,8 +10,8 @@ ofxTweakbarINI::ofxTweakbarINI(ofxTweakbar* pBar, ofxIniFile* pIni)
 }
 
 void ofxTweakbarINI::store() {
-	std::map<const char*, ofxTweakbarType*> vars = getBar()->getVariables();
-	std::map<const char*, ofxTweakbarType*>::iterator it = vars.begin();
+	std::map<std::string, ofxTweakbarType*> vars = getBar()->getVariables();
+	std::map<std::string, ofxTweakbarType*>::iterator it = vars.begin();
 	ofxTweakbarType* type = NULL;
 	TwType tw_type;
 	std::string section = getBar()->getName();
@@ -47,8 +47,8 @@ void ofxTweakbarINI::store() {
 }
 
 void ofxTweakbarINI::retrieve() {
-	std::map<const char*, ofxTweakbarType*> vars = getBar()->getVariables();
-	std::map<const char*, ofxTweakbarType*>::iterator it = vars.begin();
+	std::map<std::string, ofxTweakbarType*> vars = getBar()->getVariables();
+	std::map<std::string, ofxTweakbarType*>::iterator it = vars.begin();
 	ofxTweakbarType* type = NULL;
 	TwType tw_type;
 	std::string section = getBar()->getName();

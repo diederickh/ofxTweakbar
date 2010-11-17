@@ -1,48 +1,76 @@
 #include "ofxTweakbar.h"
 #include <sstream>
 #include "ofMain.h"
-ofxTweakbar::ofxTweakbar(std::string sName, std::string sTitle)
+#include "ofxTweakbars.h"
+ofxTweakbar::ofxTweakbar(std::string sName, std::string sTitle, bool bAutoStore, ofxTweakbars* pTweakbars)
 :name(sName) // TODO maybe a bit redundant (used by storages)
 ,title(sTitle)
+,use_autostore(bAutoStore)
+,tweakbars(pTweakbars)
 {
-	bar = TwNewBar(sName.c_str());
+	// make sure to remove non-alpha chars from the tweakbar name
+	std::string clean_name;
+	for(int i = 0; i < sName.size(); ++i) {
+		if(isalnum(sName[i])) {
+			clean_name.push_back(sName[i]);
+		}
+	}
+	if(clean_name.size() == 0) {
+		throw "Error while creating a tweakbar; use a normal name :)";
+	}
+	name = clean_name;
+	bar = TwNewBar(name.c_str());
 	setLabel(sTitle);
+	
 }
 
 ofxTweakbar::~ofxTweakbar() {
-	std::map<const char *, ofxTweakbarType*>::iterator it =  variables.begin();
+	std::map<std::string, ofxTweakbarType*>::iterator it =  variables.begin();
 	while(it != variables.end()) {
 		delete it->second;
 		++it;
 	}
 }
 
-ofxTweakbar& ofxTweakbar::setSize(int nWidth, int nHeight) {
+ofxTweakbar* ofxTweakbar::setSize(int nWidth, int nHeight) {
 	ostringstream oss;
 	oss << getName() << " size='" << nWidth << " " << nHeight << "'";
 	TwDefine(oss.str().c_str());
-	return *this;
+	return this;
 }
 	
-ofxTweakbar& ofxTweakbar::setColor(int nR, int nG, int nB, int nAlpha) {
+ofxTweakbar* ofxTweakbar::setColor(int nR, int nG, int nB, int nAlpha) {
 	ostringstream oss;
 	oss << getName() << " color='" << nR << " " << nG << " " << nB << "' alpha=" << nAlpha;
 	TwDefine(oss.str().c_str());
-	return *this;
+	return this;
 }
 
-ofxTweakbar& ofxTweakbar::setFontSize(int nSize) {
+ofxTweakbar* ofxTweakbar::setFontSize(int nSize) {
 	ostringstream oss;
 	oss << getName() << " fontsize=" << nSize;
 	TwDefine(oss.str().c_str());
-	return *this;
+	return this;
 }
 
-ofxTweakbar& ofxTweakbar::setLabel(std::string sLabel) {
+ofxTweakbar* ofxTweakbar::setLabel(std::string sLabel) {
 	ostringstream oss;
 	oss << getName() << " label='" << sLabel << "'";
 	TwDefine(oss.str().c_str());
-	return *this;
+	return this;
+}
+
+ofxTweakbar* ofxTweakbar::setPosition(float nX, float nY) {
+	ostringstream oss;
+	oss << getName() << " position='" << nX << " " << nY << "'";
+	TwDefine(oss.str().c_str());
+	return this;
+}
+
+
+// load stored state
+ofxTweakbar* ofxTweakbar::load() {
+	tweakbars->load(this);
 }
 
 TwBar* ofxTweakbar::getBar() {
@@ -110,8 +138,19 @@ ofxTweakbarColor3f* ofxTweakbar::addColor3f(
 	variables[pName] = type;
 	return type;
 }
+ofxTweakbarSeparator* ofxTweakbar::addSeparator(
+		 const char*  pName
+		,const char* pDef 
+) 
+{
+	ofxTweakbarSeparator* type = new ofxTweakbarSeparator(this, pName);
+	variables[pName] = type;
+	TwAddSeparator(bar, pName, pDef);
+	return type;
+}
 
-std::map<const char*, ofxTweakbarType*> ofxTweakbar::getVariables() {
+
+std::map<std::string, ofxTweakbarType*> ofxTweakbar::getVariables() {
 	return variables;
 }
 
@@ -119,13 +158,18 @@ std::string ofxTweakbar::getName() {
 	return name;
 }
 
-ofxTweakbar& ofxTweakbar::close() {
-	std::string cmd = getName() +" iconified=true";
-	TwDefine(cmd.c_str());
-	return *this;
+bool ofxTweakbar::useAutoStore() {
+	return use_autostore;
 }
 
-ofxTweakbar& ofxTweakbar::refresh() {
+
+ofxTweakbar* ofxTweakbar::close() {
+	std::string cmd = getName() +" iconified=true";
+	TwDefine(cmd.c_str());
+	return this;
+}
+
+ofxTweakbar* ofxTweakbar::refresh() {
 	TwRefreshBar(getBar());
-	return *this;
+	return this;
 }

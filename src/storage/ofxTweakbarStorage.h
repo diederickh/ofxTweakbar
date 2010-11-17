@@ -17,6 +17,7 @@ class ofxTweakbarStorage {
 public:
 	ofxTweakbarStorage(ofxTweakbar* pBar);
 	ofxTweakbar* getBar();
+	void setBar(ofxTweakbar* pBar);
 	virtual void store() = 0;
 	virtual void retrieve() = 0;
 private:

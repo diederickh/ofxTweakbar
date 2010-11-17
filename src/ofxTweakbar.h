@@ -5,9 +5,11 @@
 #include <map>
 #include "ofxTweakbarTypes.h"
 
+class ofxTweakbars;
+
 class ofxTweakbar {
 public:	
-	ofxTweakbar(std::string sName, std::string sTitle);
+	ofxTweakbar(std::string sName, std::string sTitle, bool bUseAutoStore, ofxTweakbars* pTweakbars);
 	~ofxTweakbar();
 	ofxTweakbarFloat* addFloat(
 			 const char* pName
@@ -38,27 +40,38 @@ public:
 			,const char *pDef = "colormode=rgb"
 	);
 	
-	ofxTweakbar& refresh();
+	ofxTweakbarSeparator* addSeparator(
+			 const char* pName = ""
+			,const char* pDef = ""
+	);	
 	
-	ofxTweakbar& close();
+	ofxTweakbar* refresh();
 	
-	ofxTweakbar& setSize(int nWidth, int nHeight);
+	ofxTweakbar* close();
 	
-	ofxTweakbar& setColor(int nR = 0, int nG = 0, int B = 0, int nAlpha = 255);
+	ofxTweakbar* setSize(int nWidth, int nHeight);
 	
-	ofxTweakbar& setFontSize(int nSize = 1);
+	ofxTweakbar* setColor(int nR = 0, int nG = 0, int B = 0, int nAlpha = 255);
 	
-	ofxTweakbar& setLabel(std::string sLabel);
+	ofxTweakbar* setFontSize(int nSize = 1);
+
+	ofxTweakbar* setLabel(std::string sLabel);
 	
-	std::map<const char*, ofxTweakbarType*> getVariables();
+	ofxTweakbar* setPosition(float nX, float nY);
+	
+	ofxTweakbar* load(); 
+	
+	std::map<std::string, ofxTweakbarType*> getVariables();
 	std::string getName();
-	
 	TwBar* getBar();
-	
+	bool useAutoStore();
+
 private:
+	ofxTweakbars* tweakbars;
+	bool use_autostore;
 	std::string title;
 	std::string name;
 	TwBar* bar;
-	std::map<const char *, ofxTweakbarType*> variables;
+	std::map<std::string, ofxTweakbarType*> variables;
 };
 #endif

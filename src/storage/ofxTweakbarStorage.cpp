@@ -5,6 +5,9 @@ ofxTweakbarStorage::ofxTweakbarStorage(ofxTweakbar* pBar)
 {
 }
 
+void ofxTweakbarStorage::setBar(ofxTweakbar* pBar) {
+	bar = pBar;
+}
 
 ofxTweakbar* ofxTweakbarStorage::getBar() {
 	return bar;
