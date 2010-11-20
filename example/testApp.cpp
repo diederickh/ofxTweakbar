@@ -8,7 +8,7 @@ testApp::testApp()
 	
 	// Speed param, between 1 and 100, shortcut key = b
 	settings->addInt("speed", &test_standard_int, "min=1 max=100 key=b");
-	settings->addVec3f("direction", &dir); // TODO: somehow this crashes :C
+	settings->addVec3f("direction", dir); // TODO: somehow this crashes :C
 	settings->addSeparator();  
 	settings->addBool("use_delay", &bool_a, "label='Use delay'");
 	settings->addBool("use_timeout", &bool_b, "label='Use timeout'");
@@ -16,7 +16,7 @@ testApp::testApp()
 	settings->addFloat("accel_tweak", &tweak)->setLabel("Tweak accel.")->setMin("0.01")->setMax("1.55");
 
 	// Group settings (setGroup(...))
-	settings->addColor3f("background_color", &colors)
+	settings->addColor3f("background_color", colors)
 			->setLabel("Colour")
 			->setGroup("Particle Settings");
 	
@@ -61,11 +61,27 @@ testApp::testApp()
 		->setSize(200,500)
 		->close();
 		
+		
+	// Advanced: add a callback function. The function buttonCallback is 
+	// called when you press the button. 
+	settings->addButton(
+		"new_files"
+		,testApp::buttonCallback
+		,this
+	)->setLabel("Change number of files");
+		
 	// By default we use a simple text file to store values automatically
 	// when you press the '.' key. Here we load these values. Be sure to 
 	// call load() after you've added all your variables.
 	particles->load();
 	settings->load();
+			
+}
+
+void TW_CALL testApp::buttonCallback(void* pApp) {
+	testApp* app = static_cast<testApp*>(pApp);
+	app->num_files = 500;
+	app->settings->refresh();
 }
 
 //--------------------------------------------------------------

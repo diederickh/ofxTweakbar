@@ -3,10 +3,8 @@
 
 
 #include "ofMain.h"
-#include "ofxTweakbars.h"
-#include "ofxTweakbar.h"
+#include "ofxTweakbarIncludes.h"
 #include "ofxTweakbarINI.h"
-#include "ofxTweakbarSimpleStorage.h"
 #include "ofxIniFile.h"
 
 class testApp : public ofBaseApp{
@@ -24,6 +22,8 @@ class testApp : public ofBaseApp{
 		void mousePressed(int x, int y, int button);
 		void mouseReleased(int x, int y, int button);
 		void windowResized(int w, int h);
+		static void TW_CALL buttonCallback(void* pApp);
+		
 		ofxTweakbar* settings;
 		ofxTweakbar* particles;
 		ofxIniFile* ini_file;
