@@ -45,6 +45,13 @@ public:
 			,const char* pDef = ""
 	);	
 	
+	ofxTweakbarButton* addButton(
+			const char* pName
+			,TwButtonCallback fCallback
+			,void* pClientData = NULL
+			,const char* pDef = ""
+	);
+	
 	ofxTweakbar* refresh();
 	
 	ofxTweakbar* close();

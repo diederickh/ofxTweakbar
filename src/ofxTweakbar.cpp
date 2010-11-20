@@ -138,6 +138,8 @@ ofxTweakbarColor3f* ofxTweakbar::addColor3f(
 	variables[pName] = type;
 	return type;
 }
+
+
 ofxTweakbarSeparator* ofxTweakbar::addSeparator(
 		 const char*  pName
 		,const char* pDef 
@@ -149,6 +151,18 @@ ofxTweakbarSeparator* ofxTweakbar::addSeparator(
 	return type;
 }
 
+ofxTweakbarButton* ofxTweakbar::addButton(
+		const char* pName
+		,TwButtonCallback fCallback
+		,void* pClientData 
+		,const char* pDef 
+)
+{
+	ofxTweakbarButton* type = new ofxTweakbarButton(this, pName);
+	variables[pName] = type;
+	TwAddButton(bar, pName, fCallback, pClientData, pDef);
+	return type;
+}
 
 std::map<std::string, ofxTweakbarType*> ofxTweakbar::getVariables() {
 	return variables;
