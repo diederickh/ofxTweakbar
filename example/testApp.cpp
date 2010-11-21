@@ -3,8 +3,8 @@
 testApp::testApp()
 {
 	// Create two tweakbars.
-	settings = ofxTweakbars::createTweakbar("settings", "Basic Settings");
-	particles = ofxTweakbars::createTweakbar("particles", "Particles");
+	settings = ofxTweakbars::create("settings", "Basic Settings");
+	particles = ofxTweakbars::create("particles", "Particles");
 	
 	// Speed param, between 1 and 100, shortcut key = b
 	settings->addInt("speed", &test_standard_int, "min=1 max=100 key=b");

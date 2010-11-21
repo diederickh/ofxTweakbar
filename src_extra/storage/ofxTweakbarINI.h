@@ -1,11 +1,10 @@
 #ifndef OFXTWEAKBARINIH
 #define OFXTWEAKBARINIH
-
-#include "ofxIniFile.h"
+	
 #include "ofxTweakbarStorage.h"
-
 #include <map>
 
+class ofxIniFile;
 class ofxTweakbar;
 class ofxTweakbarINI : public ofxTweakbarStorage{
 public:

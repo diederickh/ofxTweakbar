@@ -4,8 +4,9 @@
 
 #include "ofMain.h"
 #include "ofxTweakbarIncludes.h"
-#include "ofxTweakbarINI.h"
 #include "ofxIniFile.h"
+#include "ofxTweakbarINI.h"
+
 
 class testApp : public ofBaseApp{
 

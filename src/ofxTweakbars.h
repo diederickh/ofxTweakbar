@@ -7,13 +7,13 @@
 class ofxTweakbar;
 class ofxTweakbars {
 public:
-	static ofxTweakbar* createTweakbar(std::string sName, std::string sTitle, bool bUseAutoStore = true);
+	static ofxTweakbar* create(std::string sName, std::string sTitle, bool bUseAutoStore = true);
 	static void draw();
 	static void toggle();
 	void load(ofxTweakbar* pBar);
 private:
 	ofxTweakbars();
-	~ofxTweakbars();
+	~ofxTweakbars(); 
 	void init();
 	void autoStore();
 	

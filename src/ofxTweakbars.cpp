@@ -17,7 +17,7 @@ ofxTweakbars::~ofxTweakbars() {
 	}
 }
 
-ofxTweakbar* ofxTweakbars::createTweakbar(std::string sName, std::string sTitle, bool bUseAutoStore) {
+ofxTweakbar* ofxTweakbars::create(std::string sName, std::string sTitle, bool bUseAutoStore) {
 	if(!instance.is_initialized) {
 		instance.init();
 	}

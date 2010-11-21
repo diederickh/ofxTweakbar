@@ -1,6 +1,6 @@
 #ifndef OFXTWEAKBARSIMPLESTORAGEH
 #define OFXTWEAKBARSIMPLESTORAGEH
-#include "ofxIniFile.h"
+//#include "ofxIniFile.h"
 #include "ofxTweakbarStorage.h"
 
 #include <map>
