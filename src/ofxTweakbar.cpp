@@ -120,7 +120,7 @@ ofxTweakbarVec3f* ofxTweakbar::addVec3f(
 		,const char* pDef 
 )
 {
-	TwAddVarRW(bar, pName, TW_TYPE_DIR3F, &pValue,pDef);
+	TwAddVarRW(bar, pName, TW_TYPE_DIR3F, pValue,pDef);
 	ofxTweakbarVec3f* type = new ofxTweakbarVec3f(this, pName, pValue);
 	variables[pName] = type;
 	return type;
