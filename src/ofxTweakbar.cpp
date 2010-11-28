@@ -113,7 +113,6 @@ ofxTweakbarInt* ofxTweakbar::addInt(
 	return type;
 }
 
-
 ofxTweakbarVec3f* ofxTweakbar::addVec3f(
 		const char* pName
 		,void *pValue
@@ -126,6 +125,17 @@ ofxTweakbarVec3f* ofxTweakbar::addVec3f(
 	return type;
 }
 
+ofxTweakbarQuat4f* ofxTweakbar::addQuat4f(
+		const char* pName
+		,void *pValue
+		,const char *pDef
+) 
+{
+	TwAddVarRW(bar, pName, TW_TYPE_QUAT4F, pValue,pDef);
+	ofxTweakbarQuat4f* type = new ofxTweakbarQuat4f(this, pName, pValue);
+	variables[pName] = type;
+	return type;
+}
 
 ofxTweakbarColor3f* ofxTweakbar::addColor3f(
  		 const char* pName

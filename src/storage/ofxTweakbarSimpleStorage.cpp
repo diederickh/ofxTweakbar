@@ -50,6 +50,15 @@ void ofxTweakbarSimpleStorage::store() {
 				<< type_impl->getY()	<< "\t" 
 				<< type_impl->getZ()	<< std::endl;		
 		}
+		else if (tw_type == TW_TYPE_QUAT4F) {
+			ofxTweakbarQuat4f* type_impl = static_cast<ofxTweakbarQuat4f*>(it->second);
+			ofs << type_impl->getName() << "\t"
+				<< type_impl->getX()	<< "\t" 
+				<< type_impl->getY()	<< "\t" 
+				<< type_impl->getZ()	<< "\t"
+				<< type_impl->getS()	<< std::endl;		
+			std::cout << "store quad: " << type_impl->getX() << "," << type_impl->getY()<< "," << type_impl->getZ() << ", " << type_impl->getS() << std::endl;	
+		}
 		else if (tw_type == TW_TYPE_DIR3F) {
 			ofxTweakbarVec3f* type_impl = static_cast<ofxTweakbarVec3f*>(it->second);
 			ofs << type_impl->getName() << "\t"
@@ -112,6 +121,16 @@ void ofxTweakbarSimpleStorage::retrieve() {
 				iss >> x >> y >> z;
 				ofxTweakbarColor3f* type_impl = static_cast<ofxTweakbarColor3f*>(type);
 				type_impl->setValue(x,y,z);
+			}
+			else if(tw_type == TW_TYPE_QUAT4F) {
+				float x = 0;
+				float y = 0; 
+				float z = 0;
+				float s = 0;
+				iss >> x >> y >> z >> s;
+				std::cout << "retrieve quad: " << x << "," << y << "," << z << ", " << s << std::endl;
+				ofxTweakbarQuat4f* type_impl = static_cast<ofxTweakbarQuat4f*>(type);
+				type_impl->setValue(x,y,z,s);
 			}
 			else if(tw_type == TW_TYPE_DIR3F) {
 				float x = 0;

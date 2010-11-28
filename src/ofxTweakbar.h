@@ -40,6 +40,12 @@ public:
 			,const char *pDef = "colormode=rgb"
 	);
 	
+	ofxTweakbarQuat4f* addQuat4f(
+			const char* pName
+			,void *pValue
+			,const char *pDef = ""
+	);
+	
 	ofxTweakbarSeparator* addSeparator(
 			 const char* pName = ""
 			,const char* pDef = ""
