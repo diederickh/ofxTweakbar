@@ -11,6 +11,7 @@ class ofxTweakbar {
 public:	
 	ofxTweakbar(std::string sName, std::string sTitle, bool bUseAutoStore, ofxTweakbars* pTweakbars);
 	~ofxTweakbar();
+	
 	ofxTweakbarFloat* addFloat(
 			 const char* pName
 			,void* pValue
