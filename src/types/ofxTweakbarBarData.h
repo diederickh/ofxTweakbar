@@ -1,0 +1,25 @@
+#ifndef OFXTWEAKBARBARDATAH
+#define OFXTWEAKBARBARDATAH
+
+#include "ofxTweakbarType.h"
+
+
+// This type is used to store tweakbar specific data 
+// like the position, is it opened/close, specific size
+// etc..
+class ofxTweakbarBarData : public ofxTweakbarType {
+public:
+	ofxTweakbarBarData(ofxTweakbar* pBar, const char* pName, void* pValue = NULL);
+	virtual OFX_TW_TYPE getType();
+	bool getValue();
+	void setValue();
+	
+	float getX();
+	float getY();
+	bool getBool();
+	void setType(OFX_TW_TYPE nType);
+
+private:
+	OFX_TW_TYPE internal_type;
+};
+#endif

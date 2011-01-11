@@ -8,8 +8,8 @@ ofxTweakbarFloat::ofxTweakbarFloat(
 {
 }
 
-TwType ofxTweakbarFloat::getType() {
-	return TW_TYPE_FLOAT;
+OFX_TW_TYPE ofxTweakbarFloat::getType() {
+	return OFX_TW_TYPE_FLOAT;
 }
 
 void ofxTweakbarFloat::setValue(float fValue) {

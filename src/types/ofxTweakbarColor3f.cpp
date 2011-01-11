@@ -9,8 +9,8 @@ ofxTweakbarColor3f::ofxTweakbarColor3f(
 {
 }
 
-TwType ofxTweakbarColor3f::getType() {
-	return TW_TYPE_COLOR3F;
+OFX_TW_TYPE ofxTweakbarColor3f::getType() {
+	return OFX_TW_TYPE_COLOR3F;
 }
 
 

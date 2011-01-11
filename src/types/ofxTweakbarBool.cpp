@@ -9,8 +9,8 @@ ofxTweakbarBool::ofxTweakbarBool(
 {
 }
 
-TwType ofxTweakbarBool::getType() {
-	return TW_TYPE_BOOLCPP;
+OFX_TW_TYPE ofxTweakbarBool::getType() {
+	return OFX_TW_TYPE_BOOL;
 }
 
 bool ofxTweakbarBool::getValue() {

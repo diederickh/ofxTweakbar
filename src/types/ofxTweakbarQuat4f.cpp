@@ -9,8 +9,8 @@ ofxTweakbarQuat4f::ofxTweakbarQuat4f(
 {
 }
 
-TwType ofxTweakbarQuat4f::getType() {
-	return TW_TYPE_QUAT4F;
+OFX_TW_TYPE ofxTweakbarQuat4f::getType() {
+	return OFX_TW_TYPE_QUAT4F;
 }
 
 

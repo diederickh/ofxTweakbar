@@ -1,13 +1,31 @@
 #ifndef OFXTWEAKBARTYPEH
 #define OFXTWEAKBARTYPEH
 
+#ifndef OFXTWTYPE 
+#define OFXTWTYPE
+enum OFX_TW_TYPE {
+	OFX_TW_TYPE_BOOL
+	,OFX_TW_TYPE_INT32
+	,OFX_TW_TYPE_COLOR3F
+	,OFX_TW_TYPE_FLOAT
+	,OFX_TW_TYPE_QUAT4F
+	,OFX_TW_TYPE_VEC3F
+	,OFX_TW_TYPE_VEC2F
+	,OFX_TW_TYPE_UNDEF
+	
+	,OFX_TW_TYPE_BAR_POSITION
+	,OFX_TW_TYPE_BAR_SIZE
+	,OFX_TW_TYPE_BAR_OPENED
+};
+#endif
+
 #include "AntTweakBar.h"
 #include <map>
 class ofxTweakbar;
 class ofxTweakbarType {
 public:
 	ofxTweakbarType(ofxTweakbar* pBar, const char* pName, void* pValue);
-	virtual TwType getType() = 0;
+	virtual OFX_TW_TYPE getType() = 0;
 	virtual ofxTweakbarType* setKey(std::string sKey);
 	virtual ofxTweakbarType* setInc(std::string sInc);
 	virtual ofxTweakbarType* setDecr(std::string sDecr);
@@ -21,11 +39,9 @@ public:
 
 protected:
 	const char* name;
-	TwType type; 
+	OFX_TW_TYPE type; 
 	std::map<std::string, std::string>  properties;
 	void* value;
-	
-private:
 	ofxTweakbar* bar;
 };
 #endif

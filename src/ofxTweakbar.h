@@ -63,6 +63,8 @@ public:
 	
 	ofxTweakbar* close();
 	
+	ofxTweakbar* open();
+	
 	ofxTweakbar* setSize(int nWidth, int nHeight);
 	
 	ofxTweakbar* setColor(int nR = 0, int nG = 0, int B = 0, int nAlpha = 255);
@@ -72,7 +74,7 @@ public:
 	ofxTweakbar* setLabel(std::string sLabel);
 	
 	ofxTweakbar* setPosition(float nX, float nY);
-	
+
 	ofxTweakbar* load(); 
 	
 	std::map<std::string, ofxTweakbarType*> getVariables();
@@ -81,6 +83,10 @@ public:
 	bool useAutoStore();
 
 private:
+	ofxTweakbarBarData* position;
+	ofxTweakbarBarData* size;
+	ofxTweakbarBarData* is_open;
+	
 	ofxTweakbars* tweakbars;
 	bool use_autostore;
 	std::string title;

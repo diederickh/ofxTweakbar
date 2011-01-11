@@ -9,6 +9,6 @@ ofxTweakbarButton::ofxTweakbarButton(
 {
 }
 
-TwType ofxTweakbarButton::getType() {
-	return TW_TYPE_UNDEF; 
+OFX_TW_TYPE ofxTweakbarButton::getType() {
+	return OFX_TW_TYPE_UNDEF; 
 }

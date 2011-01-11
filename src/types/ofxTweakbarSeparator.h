@@ -4,6 +4,6 @@
 class ofxTweakbarSeparator : public ofxTweakbarType {
 public:
 	ofxTweakbarSeparator(ofxTweakbar* pBar, const char* pName);
-	virtual TwType getType();
+	virtual OFX_TW_TYPE getType();
 };
 #endif

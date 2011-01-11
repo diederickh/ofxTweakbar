@@ -4,6 +4,6 @@
 class ofxTweakbarButton : public ofxTweakbarType {
 public:
 	ofxTweakbarButton(ofxTweakbar* pBar, const char* pName);
-	virtual TwType getType();
+	virtual OFX_TW_TYPE getType();
 };
 #endif

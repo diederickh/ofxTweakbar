@@ -9,8 +9,8 @@ ofxTweakbarInt::ofxTweakbarInt(
 {
 }
 
-TwType ofxTweakbarInt::getType() {
-	return TW_TYPE_INT32;
+OFX_TW_TYPE ofxTweakbarInt::getType() {
+	return OFX_TW_TYPE_INT32;
 }
 
 

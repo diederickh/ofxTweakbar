@@ -7,3 +7,6 @@
 #include "ofxTweakbarQuat4f.h"
 #include "ofxTweakbarSeparator.h"
 #include "ofxTweakbarButton.h"
+#include "ofxTweakbarBarData.h"
+
+

@@ -9,6 +9,6 @@ ofxTweakbarSeparator::ofxTweakbarSeparator(
 {
 }
 
-TwType ofxTweakbarSeparator::getType() {
-	return TW_TYPE_UNDEF;
+OFX_TW_TYPE ofxTweakbarSeparator::getType() {
+	return OFX_TW_TYPE_UNDEF;
 }

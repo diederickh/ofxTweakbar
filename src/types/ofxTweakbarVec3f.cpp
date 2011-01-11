@@ -9,8 +9,8 @@ ofxTweakbarVec3f::ofxTweakbarVec3f(
 {	
 }
 
-TwType ofxTweakbarVec3f::getType() {
-	return TW_TYPE_DIR3F;
+OFX_TW_TYPE ofxTweakbarVec3f::getType() {
+	return OFX_TW_TYPE_VEC3F;
 }
 
 float ofxTweakbarVec3f::getX() {

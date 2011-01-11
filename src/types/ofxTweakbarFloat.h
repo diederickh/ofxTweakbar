@@ -4,7 +4,7 @@
 class ofxTweakbarFloat : public ofxTweakbarType {
 public:
 	ofxTweakbarFloat(ofxTweakbar* pBar, const char* pName, void* pValue);
-	virtual TwType getType();
+	virtual OFX_TW_TYPE getType();
 	void setValue(float fValue);
 	float getValue();
 };

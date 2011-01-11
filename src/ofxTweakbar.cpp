@@ -22,6 +22,20 @@ ofxTweakbar::ofxTweakbar(std::string sName, std::string sTitle, bool bAutoStore,
 	bar = TwNewBar(name.c_str());
 	setLabel(sTitle);
 	
+	// create a data storage for the position.
+	position = new ofxTweakbarBarData(this, "bardata_position");
+	position->setType(OFX_TW_TYPE_BAR_POSITION);
+	variables["bardata_position"] = position;	
+
+	// create a data storage for the size
+	size = new ofxTweakbarBarData(this, "bardata_size");
+	size->setType(OFX_TW_TYPE_BAR_SIZE);
+	variables["bardata_size"] = size;
+
+	// check if we are open or closed
+	size = new ofxTweakbarBarData(this, "bardata_opened");
+	size->setType(OFX_TW_TYPE_BAR_OPENED);
+	variables["bardata_opened"] = size;
 }
 
 ofxTweakbar::~ofxTweakbar() {
@@ -186,6 +200,11 @@ bool ofxTweakbar::useAutoStore() {
 	return use_autostore;
 }
 
+ofxTweakbar* ofxTweakbar::open() {
+	std::string cmd = getName() +" iconified=false";
+	TwDefine(cmd.c_str());
+	return this;
+}
 
 ofxTweakbar* ofxTweakbar::close() {
 	std::string cmd = getName() +" iconified=true";
