@@ -26,6 +26,7 @@ private:
 	// EVENT HANDLERS
 	// -------------------------------------------------------------------------
 	void setEventHandlers();
+	void unsetEventHandlers();
 	void keyPressed(ofKeyEventArgs& rArgs);
 	void mouseMoved(ofMouseEventArgs& rArgs);
 	void mousePressed(ofMouseEventArgs& rArgs);

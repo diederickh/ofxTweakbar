@@ -1,6 +1,6 @@
 #include "ofxTweakbars.h"
 #include "ofxTweakbar.h"
-
+#include "ofMain.h"
 ofxTweakbars ofxTweakbars::instance = ofxTweakbars();
 
 ofxTweakbars::ofxTweakbars()
@@ -48,6 +48,13 @@ void ofxTweakbars::draw() {
 
 void ofxTweakbars::toggle() {
 	instance.visible = !instance.visible;
+	
+	if(!instance.visible) {
+		instance.unsetEventHandlers();
+	}
+	else {
+		instance.setEventHandlers();
+	}
 }
 
 void ofxTweakbars::autoStore() {
@@ -75,6 +82,15 @@ void ofxTweakbars::setEventHandlers() {
 	ofAddListener(ofEvents.mouseReleased,	this, &ofxTweakbars::mouseReleased);
 	ofAddListener(ofEvents.mouseDragged,	this, &ofxTweakbars::mouseDragged);
 	ofAddListener(ofEvents.windowResized,	this, &ofxTweakbars::windowResized);
+}
+
+
+void ofxTweakbars::unsetEventHandlers() {
+	ofRemoveListener(ofEvents.mouseMoved,		this, &ofxTweakbars::mouseMoved);
+	ofRemoveListener(ofEvents.mousePressed,		this, &ofxTweakbars::mousePressed);
+	ofRemoveListener(ofEvents.mouseReleased,	this, &ofxTweakbars::mouseReleased);
+	ofRemoveListener(ofEvents.mouseDragged,		this, &ofxTweakbars::mouseDragged);
+	ofRemoveListener(ofEvents.windowResized,	this, &ofxTweakbars::windowResized);
 }
 
 void ofxTweakbars::keyPressed(ofKeyEventArgs& rArgs) {
