@@ -1,0 +1,57 @@
+#include "ofxTweakbarList.h"
+#include "ofxTweakbar.h"
+
+ofxTweakbarList::ofxTweakbarList(
+	ofxTweakbar* pBar
+	,const char* pName
+	,void* pValue
+	,const char* pDef
+)
+:ofxTweakbarType(pBar, pName, pValue)
+,def_string(pDef)
+{
+}
+
+OFX_TW_TYPE ofxTweakbarList::getType() {
+	return OFX_TW_TYPE_LIST;
+}
+
+ofxTweakbarList* ofxTweakbarList::addOption(int nID, std::string sLabel) {
+	TwEnumVal option;
+	option.Value = nID;
+	option.Label = sLabel.c_str();
+	options.push_back(option);
+	return this;
+}
+
+ofxTweakbarList* ofxTweakbarList::create() {
+	TwEnumVal* enum_values = new TwEnumVal[options.size()];
+	for(int i = 0; i < options.size(); ++i) {
+		enum_values[i] = options.at(i);
+	}
+	
+	enum_type = TwDefineEnum(
+		 getName()
+		,enum_values
+		,options.size()
+	);
+	
+	TwAddVarRW(
+		getBar()->getBar()
+		,getName()
+		,enum_type
+		,value
+		,def_string
+	);
+}
+
+int ofxTweakbarList::getSelectedIndex() {
+	int index_val = *static_cast<int*>(value);
+	return index_val;
+}
+
+ofxTweakbarList* ofxTweakbarList::setSelectedIndex(int nID) {
+	int* v = static_cast<int*>(value);
+	*v = nID;
+	return this;
+}
