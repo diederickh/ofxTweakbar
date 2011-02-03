@@ -29,6 +29,7 @@ public:
 		,void* pValue
 		,const char* pDef = NULL
 	);
+	~ofxTweakbarList();
 	
 	virtual OFX_TW_TYPE getType();
 	ofxTweakbarList* addOption(int nID, std::string sLabel);
@@ -38,6 +39,7 @@ public:
 	
 	std::vector<TwEnumVal> options;
 	TwType enum_type;
+	TwEnumVal* enum_values;
 	const char* def_string;
 };
 #endif

@@ -8,5 +8,6 @@
 #include "ofxTweakbarSeparator.h"
 #include "ofxTweakbarButton.h"
 #include "ofxTweakbarBarData.h"
+#include "ofxTweakbarList.h"
 
 

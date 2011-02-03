@@ -9,7 +9,12 @@ ofxTweakbarList::ofxTweakbarList(
 )
 :ofxTweakbarType(pBar, pName, pValue)
 ,def_string(pDef)
+,enum_values(NULL)
 {
+}
+
+ofxTweakbarList::~ofxTweakbarList() {
+	delete[] enum_values;
 }
 
 OFX_TW_TYPE ofxTweakbarList::getType() {
@@ -25,7 +30,7 @@ ofxTweakbarList* ofxTweakbarList::addOption(int nID, std::string sLabel) {
 }
 
 ofxTweakbarList* ofxTweakbarList::create() {
-	TwEnumVal* enum_values = new TwEnumVal[options.size()];
+	enum_values = new TwEnumVal[options.size()];
 	for(int i = 0; i < options.size(); ++i) {
 		enum_values[i] = options.at(i);
 	}

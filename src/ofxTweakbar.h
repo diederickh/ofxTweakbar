@@ -52,10 +52,29 @@ public:
 			,const char* pDef = ""
 	);	
 	
+	/**
+	    example of adding a callback, where we have "ofxTweakbar* bar"
+		=============================================================
+		
+		void TW_CALL callback(void* client) {
+			printf("callback");
+		}
+		
+		void testApp::setup() {
+			bar->addButton("somename", callback,this);
+		}
+	*/
+
 	ofxTweakbarButton* addButton(
 			const char* pName
 			,TwButtonCallback fCallback
 			,void* pClientData = NULL
+			,const char* pDef = ""
+	);
+	
+	ofxTweakbarList* addList(
+			const char* pName
+			,void* pValue
 			,const char* pDef = ""
 	);
 	
@@ -83,6 +102,7 @@ public:
 	bool useAutoStore();
 
 private:
+	int testval;
 	ofxTweakbarBarData* position;
 	ofxTweakbarBarData* size;
 	ofxTweakbarBarData* is_open;

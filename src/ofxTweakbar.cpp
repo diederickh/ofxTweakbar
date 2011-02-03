@@ -188,6 +188,17 @@ ofxTweakbarButton* ofxTweakbar::addButton(
 	return type;
 }
 
+ofxTweakbarList* ofxTweakbar::addList(
+		const char* pName
+		,void* pValue
+		,const char* pDef 
+)
+{
+	ofxTweakbarList* type = new ofxTweakbarList(this, pName, pValue, pDef);
+	variables[pName] = type;
+	return type;
+}
+
 std::map<std::string, ofxTweakbarType*> ofxTweakbar::getVariables() {
 	return variables;
 }
