@@ -48,6 +48,7 @@ ofxTweakbarList* ofxTweakbarList::create() {
 		,value
 		,def_string
 	);
+	return this;
 }
 
 int ofxTweakbarList::getSelectedIndex() {
