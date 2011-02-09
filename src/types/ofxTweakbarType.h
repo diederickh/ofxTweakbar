@@ -35,6 +35,7 @@ public:
 	virtual ofxTweakbarType* setMax(std::string sMax);
 	virtual ofxTweakbarType* setLabel(std::string sLabel);
 	virtual ofxTweakbarType* setGroup(std::string sGroup);
+	virtual ofxTweakbarType* setPrecision(std::string sPrecision);
 	ofxTweakbar* getBar();
 	const char* getName();
 

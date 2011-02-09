@@ -36,6 +36,13 @@ ofxTweakbarType* ofxTweakbarType::setStep(std::string sStep) {
 	return this;
 }
 
+ofxTweakbarType* ofxTweakbarType::setPrecision(std::string sPrecision) {
+	TwSetParam(bar->getBar(), name, "precision", TW_PARAM_CSTRING, 1, sPrecision.c_str());
+	properties["precision"] = sPrecision;
+	return this;
+
+}
+
 ofxTweakbarType* ofxTweakbarType::setMin(std::string sMin) {
 	TwSetParam(bar->getBar(), name, "min", TW_PARAM_CSTRING, 1, sMin.c_str());
 	properties["min"] = sMin;
