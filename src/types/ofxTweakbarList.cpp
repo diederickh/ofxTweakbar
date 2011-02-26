@@ -3,7 +3,7 @@
 
 ofxTweakbarList::ofxTweakbarList(
 	ofxTweakbar* pBar
-	,const char* pName
+	,string pName
 	,void* pValue
 	,const char* pDef
 )

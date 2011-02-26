@@ -2,7 +2,7 @@
 
 ofxTweakbarColor3f::ofxTweakbarColor3f(
 	 ofxTweakbar* pBar
-	,const char* pName
+	,string pName
 	,void* pValue
 )
 	:ofxTweakbarType(pBar, pName, pValue) 

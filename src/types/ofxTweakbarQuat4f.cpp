@@ -2,7 +2,7 @@
 #include "ofMain.h"
 ofxTweakbarQuat4f::ofxTweakbarQuat4f(
 	 ofxTweakbar* pBar
-	,const char* pName
+	,string pName
 	,void* pValue
 )
 	:ofxTweakbarType(pBar, pName, pValue) 

@@ -3,7 +3,8 @@
 
 #include "ofxTweakbarType.h"
 #include <vector>
-
+#include <string>
+using namespace std;
 
 /* Adds a dropdown listbox:
 
@@ -25,7 +26,7 @@ class ofxTweakbarList : public ofxTweakbarType {
 public:
 	ofxTweakbarList(
 		ofxTweakbar* pBar
-		,const char* pName
+		,string pName
 		,void* pValue
 		,const char* pDef = NULL
 	);

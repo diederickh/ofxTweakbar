@@ -4,10 +4,37 @@
 #include "ofMain.h"
 #include <sstream>
 #include <fstream>
+#include "Poco/Path.h"
+#include "Poco/Platform.h"
 
 ofxTweakbarSimpleStorage::ofxTweakbarSimpleStorage(ofxTweakbar* pBar)
 :ofxTweakbarStorage(pBar)
 {
+}
+
+string ofxTweakbarSimpleStorage::getPath() {
+	// When using the testApp::testApp() constructor the current working
+	// directory is different than when in the testApp::setup(). Kind of wierd,
+	// but this function takes this into account.
+	
+	// TODO: test/update when 007 stable is released
+	string filepath;
+	Poco::Path p;
+	string curr_path = p.current();
+	Poco::Path p_data(curr_path + "data/");
+	Poco::File file(p_data);
+	if(file.exists()) {
+		filepath = curr_path +"data/" +getBar()->getName() +".dat";
+	}
+	else {
+		if(POCO_OS_MAC_OS_X) {
+			filepath = "../../../data/" +getBar()->getName() +".dat";
+		} 
+		else {	
+			filepath = "data/" +getBar()->getName() +".dat";
+		}
+	}
+	return filepath;
 }
 
 void ofxTweakbarSimpleStorage::store() {
@@ -19,7 +46,7 @@ void ofxTweakbarSimpleStorage::store() {
 	// get file
 	std::string section = getBar()->getName();
 	std::ofstream ofs;
-	std::string file = ofToDataPath(getBar()->getName() +".dat");
+	std::string file = getPath(); 
 	ofs.open(file.c_str());
 	if (ofs.fail()) {
 		std::cout << "Error: could not open: " << file << std::endl;
@@ -98,10 +125,10 @@ void ofxTweakbarSimpleStorage::retrieve() {
 	std::map<std::string, ofxTweakbarType*>::iterator it = vars.begin();
 	ofxTweakbarType* type = NULL;
 	OFX_TW_TYPE tw_type;
-
+	
 	// create data file.
 	std::ifstream ifs;
-	std::string file = ofToDataPath(getBar()->getName() +".dat");
+	std::string file = getPath();
 	ifs.open(file.c_str());
 	if(ifs.fail()) {
 		std::cout << "Error: could not open " << file << std::endl;

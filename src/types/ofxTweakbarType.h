@@ -25,7 +25,7 @@ enum OFX_TW_TYPE {
 class ofxTweakbar;
 class ofxTweakbarType {
 public:
-	ofxTweakbarType(ofxTweakbar* pBar, const char* pName, void* pValue);
+	ofxTweakbarType(ofxTweakbar* pBar, std::string pName, void* pValue);
 	virtual OFX_TW_TYPE getType() = 0;
 	virtual ofxTweakbarType* setKey(std::string sKey);
 	virtual ofxTweakbarType* setInc(std::string sInc);
@@ -36,11 +36,15 @@ public:
 	virtual ofxTweakbarType* setLabel(std::string sLabel);
 	virtual ofxTweakbarType* setGroup(std::string sGroup);
 	virtual ofxTweakbarType* setPrecision(std::string sPrecision);
+	virtual ofxTweakbarType* setOpened(bool bOpenend);
+	virtual ofxTweakbarType* open();
+	virtual ofxTweakbarType* close();
+	virtual bool isOpened();
 	ofxTweakbar* getBar();
 	const char* getName();
 
 protected:
-	const char* name;
+	std::string name;
 	OFX_TW_TYPE type; 
 	std::map<std::string, std::string>  properties;
 	void* value;

@@ -2,6 +2,8 @@
 #define OFXTWEAKBARBARDATAH
 
 #include "ofxTweakbarType.h"
+#include <string>
+using namespace std;
 
 
 // This type is used to store tweakbar specific data 
@@ -9,7 +11,7 @@
 // etc..
 class ofxTweakbarBarData : public ofxTweakbarType {
 public:
-	ofxTweakbarBarData(ofxTweakbar* pBar, const char* pName, void* pValue = NULL);
+	ofxTweakbarBarData(ofxTweakbar* pBar, string pName, void* pValue = NULL);
 	virtual OFX_TW_TYPE getType();
 	bool getValue();
 	void setValue();

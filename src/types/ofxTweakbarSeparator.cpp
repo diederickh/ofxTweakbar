@@ -3,7 +3,7 @@
 
 ofxTweakbarSeparator::ofxTweakbarSeparator(
 	 ofxTweakbar* pBar
-	,const char* pName
+	,string pName
 )
 	:ofxTweakbarType(pBar, pName, NULL) 
 {
