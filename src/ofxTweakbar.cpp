@@ -227,3 +227,8 @@ ofxTweakbar* ofxTweakbar::refresh() {
 	TwRefreshBar(getBar());
 	return this;
 }
+
+
+void ofxTweakbar::test(const char* pName, void* pValue) {
+	TwAddVarRW(bar, pName, TW_TYPE_PIXELDATA, pValue, "");
+}

@@ -52,6 +52,8 @@ public:
 			,const char* pDef = ""
 	);	
 	
+	// -- testing custom types -- 
+	void test(const char* pName , void* pValue);
 	/**
 	    example of adding a callback, where we have "ofxTweakbar* bar"
 		=============================================================

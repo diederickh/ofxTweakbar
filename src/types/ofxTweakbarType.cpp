@@ -1,11 +1,14 @@
+#include "ofMain.h"
 #include "ofxTweakbarType.h"
 #include "ofxTweakbar.h"
-#include "ofMain.h"
+
+
 ofxTweakbarType::ofxTweakbarType(ofxTweakbar* pBar, const char* pName, void* pValue)
 :bar(pBar)
 ,name(pName)
 ,value(pValue)
 {
+
 }
 
 ofxTweakbar* ofxTweakbarType::getBar() {
