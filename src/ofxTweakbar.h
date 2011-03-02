@@ -47,10 +47,17 @@ public:
 			,const char *pDef = ""
 	);
 	
+	ofxTweakbarString* addString(
+			const char* pName
+			,void *pValue
+			,const char* pDef = ""
+	);
+	
 	ofxTweakbarSeparator* addSeparator(
 			 const char* pName = ""
 			,const char* pDef = ""
 	);	
+	
 	
 	// -- testing custom types -- 
 	void test(const char* pName , void* pValue);

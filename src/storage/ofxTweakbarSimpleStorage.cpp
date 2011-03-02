@@ -114,6 +114,11 @@ void ofxTweakbarSimpleStorage::store() {
 			ofs << type_impl->getName() << "\t"
 				<< type_impl->getSelectedIndex() << std::endl;
 		}
+		else if(tw_type == OFX_TW_TYPE_STRING) {
+			ofxTweakbarString* type_impl = static_cast<ofxTweakbarString*>(it->second);
+			ofs << type_impl->getName() << "\t"
+				<< type_impl->getValue() << std::endl;
+		}
 		++it;
 	}
 	ofs.close();
@@ -218,6 +223,12 @@ void ofxTweakbarSimpleStorage::retrieve() {
 				int selected_index = 0;
 				iss >> selected_index;
 				type_impl->setSelectedIndex(selected_index);
+			}
+			else if(tw_type == OFX_TW_TYPE_STRING) {
+				ofxTweakbarString* type_impl = static_cast<ofxTweakbarString*>(it->second);
+				string value;
+				iss >> value;
+				type_impl->setValue(value);
 			}
 
 		}
