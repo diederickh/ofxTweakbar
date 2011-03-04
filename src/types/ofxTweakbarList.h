@@ -33,7 +33,9 @@ public:
 	~ofxTweakbarList();
 	
 	virtual OFX_TW_TYPE getType();
-	ofxTweakbarList* addOption(int nID, std::string sLabel);
+	ofxTweakbarList* addOption(int nID, string sLabel);
+	ofxTweakbarList* setLabel(int nID, string sLabel);
+	
 	ofxTweakbarList* create(); // call this when you added all labels.
 	int getSelectedIndex();
 	ofxTweakbarList* setSelectedIndex(int nID);

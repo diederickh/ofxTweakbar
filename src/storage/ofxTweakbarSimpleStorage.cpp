@@ -24,14 +24,14 @@ string ofxTweakbarSimpleStorage::getPath() {
 	Poco::Path p_data(curr_path + "data/");
 	Poco::File file(p_data);
 	if(file.exists()) {
-		filepath = curr_path +"data/" +getBar()->getName() +".dat";
+		filepath = curr_path +"data/" +getBar()->getFileName();
 	}
 	else {
 		if(POCO_OS_MAC_OS_X) {
-			filepath = "../../../data/" +getBar()->getName() +".dat";
+			filepath = "../../../data/" +getBar()->getFileName();
 		} 
 		else {	
-			filepath = "data/" +getBar()->getName() +".dat";
+			filepath = "data/" +getBar()->getFileName();
 		}
 	}
 	return filepath;
@@ -108,6 +108,11 @@ void ofxTweakbarSimpleStorage::store() {
 			ofxTweakbarBarData* type_impl = static_cast<ofxTweakbarBarData*>(it->second);
 			ofs << type_impl->getName()	<< "\t"
 				<< type_impl->getBool() << std::endl;
+		}
+		else if (tw_type == OFX_TW_TYPE_BAR_VALUES_WIDTH) {
+			ofxTweakbarBarData* type_impl = static_cast<ofxTweakbarBarData*>(it->second);
+			ofs << type_impl->getName()	<< "\t"
+				<< type_impl->getValuesWidth() << std::endl;
 		}
 		else if(tw_type == OFX_TW_TYPE_LIST) {
 			ofxTweakbarList* type_impl = static_cast<ofxTweakbarList*>(it->second);
@@ -217,6 +222,11 @@ void ofxTweakbarSimpleStorage::retrieve() {
 				else { 
 					getBar()->close();
 				}
+			}
+			else if (tw_type == OFX_TW_TYPE_BAR_VALUES_WIDTH) {
+				int val_width = 0;
+				iss >> val_width;
+				getBar()->setValuesWidth(val_width);
 			}
 			else if(tw_type == OFX_TW_TYPE_LIST) {
 				ofxTweakbarList* type_impl = static_cast<ofxTweakbarList*>(it->second);

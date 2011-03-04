@@ -29,6 +29,11 @@ ofxTweakbarList* ofxTweakbarList::addOption(int nID, std::string sLabel) {
 	return this;
 }
 
+ofxTweakbarList* ofxTweakbarList::setLabel(int nID, string sLabel) {
+	enum_values[nID].Label = sLabel.c_str();
+	return this;
+}
+
 ofxTweakbarList* ofxTweakbarList::create() {
 	enum_values = new TwEnumVal[options.size()];
 	for(int i = 0; i < options.size(); ++i) {

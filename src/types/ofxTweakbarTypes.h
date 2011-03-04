@@ -10,5 +10,6 @@
 #include "ofxTweakbarBarData.h"
 #include "ofxTweakbarList.h"
 #include "ofxTweakbarString.h"
+#include "ofxTweakbarFiles.h"
 
 
