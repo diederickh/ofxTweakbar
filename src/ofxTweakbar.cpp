@@ -109,7 +109,6 @@ ofxTweakbar* ofxTweakbar::setValuesWidth(int nWidth) {
 	TwDefine(oss.str().c_str());
 }
 
-
 // load stored state
 ofxTweakbar* ofxTweakbar::load() {
 	ofxTweakbars::load(this);
