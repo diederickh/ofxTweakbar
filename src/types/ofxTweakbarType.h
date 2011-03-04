@@ -3,6 +3,9 @@
 
 #ifndef OFXTWTYPE 
 #define OFXTWTYPE
+
+
+
 enum OFX_TW_TYPE {
 	OFX_TW_TYPE_BOOL
 	,OFX_TW_TYPE_INT32
@@ -14,13 +17,16 @@ enum OFX_TW_TYPE {
 	,OFX_TW_TYPE_UNDEF
 	,OFX_TW_TYPE_LIST
 	,OFX_TW_TYPE_STRING
+	,OFX_TW_TYPE_FILES
 	
 	,OFX_TW_TYPE_BAR_POSITION
 	,OFX_TW_TYPE_BAR_SIZE
 	,OFX_TW_TYPE_BAR_OPENED
+	,OFX_TW_TYPE_BAR_VALUES_WIDTH
 };
 #endif
 
+#include "ofMain.h"
 #include "AntTweakBar.h"
 #include <map>
 class ofxTweakbar;
@@ -42,7 +48,8 @@ public:
 	virtual ofxTweakbarType* close();
 	virtual bool isOpened();
 	ofxTweakbar* getBar();
-	const char* getName();
+	const char* getName(); // TODO: should return string
+	string getLabel();
 
 protected:
 	std::string name;

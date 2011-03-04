@@ -3,6 +3,18 @@
 #include "ofxTweakbars.h"
 #include <sstream>
 
+void TW_CALL ofxtweakbar_loadclick(void* pTweakbar) {
+	ofxTweakbar* bar = static_cast<ofxTweakbar*>(pTweakbar);
+	string load_file = bar->getFile("ofxtweakbar_file")->getSelectedFileName();
+	if(load_file != "") {
+		ofxTweakbars::load(bar, load_file);
+	}
+};
+
+void TW_CALL ofxtweakbar_saveclick(void* pTweakbar) {
+	ofxTweakbar* bar = static_cast<ofxTweakbar*>(pTweakbar);
+	ofxTweakbars::save(bar, bar->getString("ofxtweakbar_fileame"));
+}
 
 ofxTweakbar::ofxTweakbar(std::string sName, std::string sTitle, bool bAutoStore, ofxTweakbars* pTweakbars)
 :name(sName) // TODO maybe a bit redundant (used by storages)
@@ -22,9 +34,11 @@ ofxTweakbar::ofxTweakbar(std::string sName, std::string sTitle, bool bAutoStore,
 		throw "Error while creating a tweakbar; use a normal name :)";
 	}
 	name = clean_name;
+	filename = name +".dat";
 	bar = TwNewBar(name.c_str());
 	setLabel(sTitle);
 	
+	// TODO: We need only one BarData and let it store all properties!!
 	// create a data storage for the position.
 	position = new ofxTweakbarBarData(this, "bardata_position");
 	position->setType(OFX_TW_TYPE_BAR_POSITION);
@@ -39,6 +53,11 @@ ofxTweakbar::ofxTweakbar(std::string sName, std::string sTitle, bool bAutoStore,
 	size = new ofxTweakbarBarData(this, "bardata_opened");
 	size->setType(OFX_TW_TYPE_BAR_OPENED);
 	variables["bardata_opened"] = size;
+	
+	// create data storage for values width
+	values_width = new ofxTweakbarBarData(this, "bardata_valueswidth");
+	values_width->setType(OFX_TW_TYPE_BAR_VALUES_WIDTH);
+	variables["bardata_valueswidth"] = values_width;
 }
 
 ofxTweakbar::~ofxTweakbar() {
@@ -84,10 +103,15 @@ ofxTweakbar* ofxTweakbar::setPosition(float nX, float nY) {
 	return this;
 }
 
+ofxTweakbar* ofxTweakbar::setValuesWidth(int nWidth) {
+	ostringstream oss;
+	oss << getName() << " valueswidth='" << nWidth << "'";
+	TwDefine(oss.str().c_str());
+}
 
 // load stored state
 ofxTweakbar* ofxTweakbar::load() {
-	tweakbars->load(this);
+	ofxTweakbars::load(this);
 }
 
 TwBar* ofxTweakbar::getBar() {
@@ -180,6 +204,16 @@ ofxTweakbarString* ofxTweakbar::addString(
 	return type;
 }
 
+ofxTweakbarFiles* ofxTweakbar::addFiles(
+		 const char* pName
+		,void *pValue
+		,const char* pDef 
+)
+{
+	ofxTweakbarFiles* type = new ofxTweakbarFiles(this, pName, pValue, pDef);
+	variables[type->getName()] = type;
+	return type;
+}
 
 ofxTweakbarSeparator* ofxTweakbar::addSeparator(
 		 const char*  pName
@@ -216,12 +250,38 @@ ofxTweakbarList* ofxTweakbar::addList(
 	return type;
 }
 
+ofxTweakbar* ofxTweakbar::addLoader(string sPath, string sExt) {
+	if(sPath == "") {
+		sPath = ofToDataPath(".", true);
+	}
+	addFiles("ofxtweakbar_file", NULL)
+		->setPath(sPath,sExt)
+		->create()
+		->setLabel("Select file ...");
+	addButton("load", ofxtweakbar_loadclick, this)->setLabel("LOAD");	
+	return this;
+}
+
+ofxTweakbar* ofxTweakbar::addSaver() {
+	addString("ofxtweakbar_filename",&filename)->setLabel("Save settings as");
+	addButton("Save", ofxtweakbar_saveclick, this)->setLabel("SAVE");
+	return this;
+}
+
 std::map<std::string, ofxTweakbarType*> ofxTweakbar::getVariables() {
 	return variables;
 }
 
 std::string ofxTweakbar::getName() {
 	return name;
+}
+
+std::string ofxTweakbar::getFileName() {
+	return filename;
+}
+
+void ofxTweakbar::setFileName(std::string sFileName) {
+	filename = sFileName;
 }
 
 bool ofxTweakbar::useAutoStore() {
@@ -245,6 +305,23 @@ ofxTweakbar* ofxTweakbar::refresh() {
 	return this;
 }
 
+string ofxTweakbar::getString(string sName) {
+	map<string, ofxTweakbarType*>::const_iterator it =  variables.find(sName);
+	if(it != variables.end()) {
+		ofxTweakbarString* str = static_cast<ofxTweakbarString*>(it->second);
+		return str->getValue();
+	}
+	return "";
+}
+
+ofxTweakbarFiles* ofxTweakbar::getFile(string sName) {
+	map<string, ofxTweakbarType*>::iterator it =  variables.find(sName);
+	if(it != variables.end()) {
+		ofxTweakbarFiles* type = static_cast<ofxTweakbarFiles*>(it->second);
+		return type;
+	}
+	return NULL;
+}
 
 void ofxTweakbar::test(const char* pName, void* pValue) {
 	TwAddVarRW(bar, pName, TW_TYPE_PIXELDATA, pValue, "");

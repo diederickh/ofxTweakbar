@@ -1,5 +1,5 @@
-#ifndef ofxTweakbarStringH
-#define ofxTweakbarStringH
+#ifndef OFXTWEAKBARSTRINGH
+#define OFXTWEAKBARSTRINGH
 #include "ofxTweakbarType.h"
 #include <string>
 using namespace std;

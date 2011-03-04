@@ -1,6 +1,7 @@
 #include "ofxTweakbarBarData.h"
 #include "ofxTweakbar.h"
 #include <iostream>
+// TODO: We don't need all these internal types; we can store this as one line 
 
 ofxTweakbarBarData::ofxTweakbarBarData(
 								   ofxTweakbar* pBar
@@ -20,7 +21,14 @@ void ofxTweakbarBarData::setType(OFX_TW_TYPE nType) {
 	internal_type = nType;
 }
 
+int ofxTweakbarBarData::getValuesWidth() {
+	int val_width;
+	TwGetParam(bar->getBar(), NULL, "valueswidth", TW_PARAM_INT32,1, &val_width);
+	return val_width;
+}
+
 bool ofxTweakbarBarData::getBool() {
+	//ofLog(OF_LOG_VERBOSE, "Saved to file: '%s'", sFileName.c_str());
 	bool bool_value = false;
 	int val;
 	if(internal_type == OFX_TW_TYPE_BAR_OPENED) {

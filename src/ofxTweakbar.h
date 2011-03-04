@@ -53,10 +53,24 @@ public:
 			,const char* pDef = ""
 	);
 	
+	ofxTweakbarFiles* addFiles(
+			const char* pName
+			,void *pValue
+			,const char* pDef = ""
+	);
+	
 	ofxTweakbarSeparator* addSeparator(
 			 const char* pName = ""
 			,const char* pDef = ""
 	);	
+	
+	ofxTweakbar* addLoader(string sPath = "", string sExt = "*.dat");
+	ofxTweakbar* addSaver();
+	
+	// Getters: still under review!
+	//--------------------------------------------------------------------------
+	string getString(string sName);
+	ofxTweakbarFiles* getFile(string sName); 
 	
 	
 	// -- testing custom types -- 
@@ -105,22 +119,29 @@ public:
 
 	ofxTweakbar* load(); 
 	
+	ofxTweakbar* setValuesWidth(int nWidth);
+	
 	std::map<std::string, ofxTweakbarType*> getVariables();
 	std::string getName();
+	void setFileName(std::string sName);
+	std::string getFileName();
 	TwBar* getBar();
 	bool useAutoStore();
-
+	
+std::map<std::string, ofxTweakbarType*> variables;
 private:
 	int testval;
 	ofxTweakbarBarData* position;
 	ofxTweakbarBarData* size;
 	ofxTweakbarBarData* is_open;
+	ofxTweakbarBarData* values_width;
 	
 	ofxTweakbars* tweakbars;
 	bool use_autostore;
 	std::string title;
 	std::string name;
+	std::string filename;
 	TwBar* bar;
-	std::map<std::string, ofxTweakbarType*> variables;
+	
 };
 #endif

@@ -10,7 +10,9 @@ public:
 	static ofxTweakbar* create(std::string sName, std::string sTitle, bool bUseAutoStore = true);
 	static void draw();
 	static void toggle();
-	void load(ofxTweakbar* pBar);
+	static ofxTweakbars* getInstance();
+	static void save(ofxTweakbar* pBar, string sFileName = "");
+	static void load(ofxTweakbar* pBar, string sFileName = "");
 private:
 	ofxTweakbars();
 	~ofxTweakbars(); 

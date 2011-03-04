@@ -104,3 +104,8 @@ bool ofxTweakbarType::isOpened() {
 const char* ofxTweakbarType::getName() {
 	return name.c_str();
 }
+
+string ofxTweakbarType::getLabel() {
+	return properties["label"];
+}
+
