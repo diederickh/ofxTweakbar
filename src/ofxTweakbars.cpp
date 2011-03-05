@@ -72,7 +72,7 @@ void ofxTweakbars::save(ofxTweakbar* pBar, string sFileName) {
 	getInstance()->simple_storage.setBar(pBar);
 	getInstance()->simple_storage.store();
 	pBar->setFileName(orig_name);
-	ofLog(OF_LOG_VERBOSE, "Saved to file: '%s'", sFileName.c_str());
+	ofLog(OF_LOG_VERBOSE, "Saved to file: '%s'", use_name.c_str());
 }
 
 void ofxTweakbars::load(ofxTweakbar* pBar, string sFileName) {
@@ -82,8 +82,9 @@ void ofxTweakbars::load(ofxTweakbar* pBar, string sFileName) {
 	}
 	getInstance()->simple_storage.setBar(pBar);
 	getInstance()->simple_storage.retrieve();
+	ofLog(OF_LOG_VERBOSE, "Loaded file: '%s'", pBar->getFileName().c_str());
 	pBar->setFileName(curr_filename);
-	ofLog(OF_LOG_VERBOSE, "Loaded file: '%s'", sFileName.c_str());
+	
 }
 
 void ofxTweakbars::autoStore() {
