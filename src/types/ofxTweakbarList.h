@@ -34,7 +34,7 @@ public:
 	
 	virtual OFX_TW_TYPE getType();
 	ofxTweakbarList* addOption(int nID, string sLabel);
-	ofxTweakbarList* setLabel(int nID, string sLabel);
+	ofxTweakbarList* setOptionLabel(int nID, string sLabel);
 	
 	ofxTweakbarList* create(); // call this when you added all labels.
 	int getSelectedIndex();
