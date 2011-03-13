@@ -58,6 +58,16 @@ void ofxTweakbars::toggle() {
 	}
 }
 
+void ofxTweakbars::hide() {
+	instance.visible = false;
+	instance.unsetEventHandlers();
+}
+
+void ofxTweakbars::show() {
+	instance.visible = true;
+	instance.setEventHandlers();
+}
+
 ofxTweakbars* ofxTweakbars::getInstance() {
 	return &ofxTweakbars::instance;
 }

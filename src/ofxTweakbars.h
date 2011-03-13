@@ -10,18 +10,22 @@ public:
 	static ofxTweakbar* create(std::string sName, std::string sTitle, bool bUseAutoStore = true);
 	static void draw();
 	static void toggle();
+	static void hide();
+	static void show();
 	static ofxTweakbars* getInstance();
 	static void save(ofxTweakbar* pBar, string sFileName = "");
 	static void load(ofxTweakbar* pBar, string sFileName = "");
+
 private:
 	ofxTweakbars();
 	~ofxTweakbars(); 
 	void init();
 	void autoStore();
 	
-	
+
 	std::map<std::string, ofxTweakbar*> bars;
-	bool visible;
+	
+	bool visible;		
 	bool is_initialized;
 	ofxTweakbarSimpleStorage simple_storage;
 	
