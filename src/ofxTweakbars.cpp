@@ -25,7 +25,7 @@ ofxTweakbar* ofxTweakbars::create(std::string sName, std::string sTitle, bool bU
 	ofxTweakbar* bar = new ofxTweakbar(sName, sTitle, bUseAutoStore,&instance);
 
 	// some defaults.
-	bar	->setColor(44,44,44,180)
+	bar	->setColor(44,44,44,200)
 		->setFontSize(2);
 	instance.bars[sName] = bar;
 	return bar;
