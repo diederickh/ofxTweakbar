@@ -1,0 +1,21 @@
+<install>
+	<name>ofxTweakbar</name>
+	<version>0.01</version>
+	<author>Diederick Huijbers</author>
+	<author_website>http://www.roxlu.com</author_website>
+	<code_url>https://github.com/roxlu/ofxTweakbar</code_url>
+	<site_url>http://www.roxlu.com/of/ofxtweakbar</site_url>
+	<download_url>https://github.com/roxlu/ofxTweakbar/zipball/master</download_url>
+	<forum_url></forum_url>
+	<supported_os>
+		<win>y</win>
+    		<mac>y</mac>
+    		<linux>y</linux>
+    	</supported_os>
+    <description><![CDATA[
+Nice, small, fast and easy to use GUI. For more information on how to use this addon
+see <a href="http://www.roxlu.com/of/ofxtweakbar">a short tutorial</a>  
+    ]]></description>
+    <has_example>y</has_example>
+</install>
+
