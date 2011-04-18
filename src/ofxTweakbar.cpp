@@ -1,13 +1,16 @@
-#include "ofxTweakbar.h"
-#include <sstream>
 #include "ofMain.h"
+#include "ofxTweakbar.h"
 #include "ofxTweakbars.h"
+#include <sstream>
+
+
 ofxTweakbar::ofxTweakbar(std::string sName, std::string sTitle, bool bAutoStore, ofxTweakbars* pTweakbars)
 :name(sName) // TODO maybe a bit redundant (used by storages)
 ,title(sTitle)
 ,use_autostore(bAutoStore)
 ,tweakbars(pTweakbars)
 {
+
 	// make sure to remove non-alpha chars from the tweakbar name
 	std::string clean_name;
 	for(int i = 0; i < sName.size(); ++i) {
@@ -97,9 +100,9 @@ ofxTweakbarFloat* ofxTweakbar::addFloat(
 		,const char* pDef
 ) 
 {
-	TwAddVarRW(bar, pName, TW_TYPE_FLOAT, pValue, pDef);
 	ofxTweakbarFloat* type = new ofxTweakbarFloat(this, pName, pValue);
-	variables[pName] = type;
+	TwAddVarRW(bar, type->getName(), TW_TYPE_FLOAT, pValue, pDef);
+	variables[type->getName()] = type;
 	return type;
 }
 
@@ -109,9 +112,9 @@ ofxTweakbarBool* ofxTweakbar::addBool(
 		,const char* pDef
 )
 {
-	TwAddVarRW(bar, pName, TW_TYPE_BOOLCPP, pValue, pDef);
 	ofxTweakbarBool* type = new ofxTweakbarBool(this, pName, pValue);
-	variables[pName] = type;
+	TwAddVarRW(bar, type->getName(), TW_TYPE_BOOLCPP, pValue, pDef);
+	variables[type->getName()] = type;
 	return type;
 }
 
@@ -121,9 +124,9 @@ ofxTweakbarInt* ofxTweakbar::addInt(
 		,const char* pDef
 )
 {
-	TwAddVarRW(bar,pName, TW_TYPE_INT32, pValue, pDef);
 	ofxTweakbarInt* type = new ofxTweakbarInt(this, pName, pValue);
-	variables[pName] = type;
+	TwAddVarRW(bar,type->getName(), TW_TYPE_INT32, pValue, pDef);
+	variables[type->getName()] = type;
 	return type;
 }
 
@@ -133,9 +136,10 @@ ofxTweakbarVec3f* ofxTweakbar::addVec3f(
 		,const char* pDef 
 )
 {
-	TwAddVarRW(bar, pName, TW_TYPE_DIR3F, pValue,pDef);
+
 	ofxTweakbarVec3f* type = new ofxTweakbarVec3f(this, pName, pValue);
-	variables[pName] = type;
+	TwAddVarRW(bar, type->getName(), TW_TYPE_DIR3F, pValue,pDef);
+	variables[type->getName()] = type;
 	return type;
 }
 
@@ -145,9 +149,9 @@ ofxTweakbarQuat4f* ofxTweakbar::addQuat4f(
 		,const char *pDef
 ) 
 {
-	TwAddVarRW(bar, pName, TW_TYPE_QUAT4F, pValue,pDef);
 	ofxTweakbarQuat4f* type = new ofxTweakbarQuat4f(this, pName, pValue);
-	variables[pName] = type;
+	TwAddVarRW(bar, type->getName(), TW_TYPE_QUAT4F, pValue,pDef);
+	variables[type->getName()] = type;
 	return type;
 }
 
@@ -157,9 +161,9 @@ ofxTweakbarColor3f* ofxTweakbar::addColor3f(
 		,const char *pDef
 )
 {
-	TwAddVarRW(bar, pName, TW_TYPE_COLOR3F, pValue, pDef);
 	ofxTweakbarColor3f* type = new ofxTweakbarColor3f(this, pName, pValue);
-	variables[pName] = type;
+	TwAddVarRW(bar, type->getName(), TW_TYPE_COLOR3F, pValue, pDef);
+	variables[type->getName()] = type;
 	return type;
 }
 
@@ -170,8 +174,8 @@ ofxTweakbarSeparator* ofxTweakbar::addSeparator(
 ) 
 {
 	ofxTweakbarSeparator* type = new ofxTweakbarSeparator(this, pName);
-	variables[pName] = type;
-	TwAddSeparator(bar, pName, pDef);
+	variables[type->getName()] = type;
+	TwAddSeparator(bar, type->getName(), pDef);
 	return type;
 }
 
@@ -183,8 +187,8 @@ ofxTweakbarButton* ofxTweakbar::addButton(
 )
 {
 	ofxTweakbarButton* type = new ofxTweakbarButton(this, pName);
-	variables[pName] = type;
-	TwAddButton(bar, pName, fCallback, pClientData, pDef);
+	TwAddButton(bar, type->getName(), fCallback, pClientData, pDef);
+	variables[type->getName()] = type;
 	return type;
 }
 
@@ -195,7 +199,7 @@ ofxTweakbarList* ofxTweakbar::addList(
 )
 {
 	ofxTweakbarList* type = new ofxTweakbarList(this, pName, pValue, pDef);
-	variables[pName] = type;
+	variables[type->getName()] = type;
 	return type;
 }
 

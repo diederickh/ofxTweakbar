@@ -2,7 +2,7 @@
 
 ofxTweakbarBool::ofxTweakbarBool(
 	 ofxTweakbar* pBar
-	,const char* pName
+	,string pName
 	,void* pValue
 )
 	:ofxTweakbarType(pBar, pName, pValue) 

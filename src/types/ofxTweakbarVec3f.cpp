@@ -2,7 +2,7 @@
 
 ofxTweakbarVec3f::ofxTweakbarVec3f(
 	 ofxTweakbar* pBar
-	,const char* pName
+	,string pName
 	,void* pValue
 )
 	:ofxTweakbarType(pBar, pName, pValue) 
