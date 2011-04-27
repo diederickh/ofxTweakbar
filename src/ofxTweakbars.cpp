@@ -1,6 +1,7 @@
 #include "ofxTweakbars.h"
 #include "ofxTweakbar.h"
 #include "ofMain.h"
+#include <GLUT/glut.h>
 ofxTweakbars ofxTweakbars::instance = ofxTweakbars();
 
 ofxTweakbars::ofxTweakbars()
@@ -24,7 +25,7 @@ ofxTweakbar* ofxTweakbars::create(std::string sName, std::string sTitle, bool bU
 	ofxTweakbar* bar = new ofxTweakbar(sName, sTitle, bUseAutoStore,&instance);
 
 	// some defaults.
-	bar	->setColor(44,44,44,180)
+	bar	->setColor(44,44,44,200)
 		->setFontSize(2);
 	instance.bars[sName] = bar;
 	return bar;
@@ -57,6 +58,45 @@ void ofxTweakbars::toggle() {
 	}
 }
 
+void ofxTweakbars::hide() {
+	instance.visible = false;
+	instance.unsetEventHandlers();
+}
+
+void ofxTweakbars::show() {
+	instance.visible = true;
+	instance.setEventHandlers();
+}
+
+ofxTweakbars* ofxTweakbars::getInstance() {
+	return &ofxTweakbars::instance;
+}
+
+void ofxTweakbars::save(ofxTweakbar* pBar, string sFileName) {
+	string orig_name = pBar->getFileName();
+	string use_name = orig_name;
+	if(sFileName != "") {
+		use_name = sFileName;
+	}
+	pBar->setFileName(use_name);
+	getInstance()->simple_storage.setBar(pBar);
+	getInstance()->simple_storage.store();
+	pBar->setFileName(orig_name);
+	ofLog(OF_LOG_VERBOSE, "Saved to file: '%s'", use_name.c_str());
+}
+
+void ofxTweakbars::load(ofxTweakbar* pBar, string sFileName) {
+	string curr_filename = pBar->getFileName();
+	if(sFileName != "") {
+		pBar->setFileName(sFileName);
+	}
+	getInstance()->simple_storage.setBar(pBar);
+	getInstance()->simple_storage.retrieve();
+	ofLog(OF_LOG_VERBOSE, "Loaded file: '%s'", pBar->getFileName().c_str());
+	pBar->setFileName(curr_filename);
+	
+}
+
 void ofxTweakbars::autoStore() {
 	std::map<std::string, ofxTweakbar*>::iterator it = instance.bars.begin();
 	while(it != instance.bars.end()) {
@@ -68,10 +108,7 @@ void ofxTweakbars::autoStore() {
 	}
 }
 
-void ofxTweakbars::load(ofxTweakbar* pBar) {
-	simple_storage.setBar(pBar);
-	simple_storage.retrieve();
-}
+
 
 // EVENT HANDLERS
 //------------------------------------------------------------------------------
@@ -94,6 +131,12 @@ void ofxTweakbars::unsetEventHandlers() {
 }
 
 void ofxTweakbars::keyPressed(ofKeyEventArgs& rArgs) {
+	// up, down, left, right are working now!
+	if(rArgs.key == OF_KEY_DOWN)		{	rArgs.key = TW_KEY_DOWN;	}
+	else if(rArgs.key == OF_KEY_UP)		{	rArgs.key = TW_KEY_UP;		}
+	else if(rArgs.key == OF_KEY_LEFT)	{	rArgs.key = TW_KEY_LEFT;	}
+	else if(rArgs.key == OF_KEY_RIGHT)	{	rArgs.key = TW_KEY_RIGHT;	}
+	
 	TwKeyPressed(rArgs.key, TW_KMOD_NONE); // fix this!
 	// default keys (not sure if this is really user friendly.. people?)
 	if(rArgs.key == '.') {
@@ -102,7 +145,6 @@ void ofxTweakbars::keyPressed(ofKeyEventArgs& rArgs) {
 	else if (rArgs.key == ',') {
 		toggle();
 	}
-	
 }
 
 void ofxTweakbars::mouseMoved(ofMouseEventArgs& rArgs) {

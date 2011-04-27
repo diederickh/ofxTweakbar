@@ -15,7 +15,7 @@ public:
 	virtual OFX_TW_TYPE getType();
 	bool getValue();
 	void setValue();
-	
+	int getValuesWidth();
 	float getX();
 	float getY();
 	bool getBool();

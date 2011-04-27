@@ -24,14 +24,14 @@ string ofxTweakbarSimpleStorage::getPath() {
 	Poco::Path p_data(curr_path + "data/");
 	Poco::File file(p_data);
 	if(file.exists()) {
-		filepath = curr_path +"data/" +getBar()->getName() +".dat";
+		filepath = curr_path +"data/" +getBar()->getFileName();
 	}
 	else {
 		if(POCO_OS_MAC_OS_X) {
-			filepath = "../../../data/" +getBar()->getName() +".dat";
+			filepath = "../../../data/" +getBar()->getFileName();
 		} 
 		else {	
-			filepath = "data/" +getBar()->getName() +".dat";
+			filepath = "data/" +getBar()->getFileName();
 		}
 	}
 	return filepath;
@@ -83,7 +83,8 @@ void ofxTweakbarSimpleStorage::store() {
 				<< type_impl->getX()	<< "\t" 
 				<< type_impl->getY()	<< "\t" 
 				<< type_impl->getZ()	<< "\t"
-				<< type_impl->getS()	<< std::endl;		
+				<< type_impl->getS()	<< "\t"
+				<< type_impl->isOpened() << std::endl;		
 		}
 		else if (tw_type == OFX_TW_TYPE_VEC3F) {
 			ofxTweakbarVec3f* type_impl = static_cast<ofxTweakbarVec3f*>(it->second);
@@ -109,10 +110,20 @@ void ofxTweakbarSimpleStorage::store() {
 			ofs << type_impl->getName()	<< "\t"
 				<< type_impl->getBool() << std::endl;
 		}
+		else if (tw_type == OFX_TW_TYPE_BAR_VALUES_WIDTH) {
+			ofxTweakbarBarData* type_impl = static_cast<ofxTweakbarBarData*>(it->second);
+			ofs << type_impl->getName()	<< "\t"
+				<< type_impl->getValuesWidth() << std::endl;
+		}
 		else if(tw_type == OFX_TW_TYPE_LIST) {
 			ofxTweakbarList* type_impl = static_cast<ofxTweakbarList*>(it->second);
 			ofs << type_impl->getName() << "\t"
 				<< type_impl->getSelectedIndex() << std::endl;
+		}
+		else if(tw_type == OFX_TW_TYPE_STRING) {
+			ofxTweakbarString* type_impl = static_cast<ofxTweakbarString*>(it->second);
+			ofs << type_impl->getName() << "\t"
+				<< type_impl->getValue() << std::endl;
 		}
 		++it;
 	}
@@ -176,9 +187,11 @@ void ofxTweakbarSimpleStorage::retrieve() {
 				float y = 0; 
 				float z = 0;
 				float s = 0;
-				iss >> x >> y >> z >> s;
+				bool is_opened = false;
+				iss >> x >> y >> z >> s >> is_opened;
 				ofxTweakbarQuat4f* type_impl = static_cast<ofxTweakbarQuat4f*>(type);
 				type_impl->setValue(x,y,z,s);
+				type_impl->setOpened(is_opened);
 			}
 			else if(tw_type == OFX_TW_TYPE_VEC3F) {
 				float x = 0;
@@ -213,11 +226,22 @@ void ofxTweakbarSimpleStorage::retrieve() {
 					getBar()->close();
 				}
 			}
+			else if (tw_type == OFX_TW_TYPE_BAR_VALUES_WIDTH) {
+				int val_width = 0;
+				iss >> val_width;
+				getBar()->setValuesWidth(val_width);
+			}
 			else if(tw_type == OFX_TW_TYPE_LIST) {
 				ofxTweakbarList* type_impl = static_cast<ofxTweakbarList*>(it->second);
 				int selected_index = 0;
 				iss >> selected_index;
 				type_impl->setSelectedIndex(selected_index);
+			}
+			else if(tw_type == OFX_TW_TYPE_STRING) {
+				ofxTweakbarString* type_impl = static_cast<ofxTweakbarString*>(it->second);
+				string value;
+				iss >> value;
+				type_impl->setValue(value);
 			}
 
 		}
