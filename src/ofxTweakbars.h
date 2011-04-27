@@ -15,6 +15,8 @@ public:
 	static ofxTweakbars* getInstance();
 	static void save(ofxTweakbar* pBar, string sFileName = "");
 	static void load(ofxTweakbar* pBar, string sFileName = "");
+	void setEventHandlers();
+	void unsetEventHandlers();
 
 private:
 	ofxTweakbars();
@@ -31,8 +33,6 @@ private:
 	
 	// EVENT HANDLERS
 	// -------------------------------------------------------------------------
-	void setEventHandlers();
-	void unsetEventHandlers();
 	void keyPressed(ofKeyEventArgs& rArgs);
 	void mouseMoved(ofMouseEventArgs& rArgs);
 	void mousePressed(ofMouseEventArgs& rArgs);
