@@ -225,4 +225,5 @@ void ofxTweakbarSimpleStorage::retrieve() {
 		}
 	}
 	getBar()->refresh();
+	getBar()->changed();
 }

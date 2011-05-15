@@ -39,6 +39,8 @@ ofxTweakbar::ofxTweakbar(std::string sName, std::string sTitle, bool bAutoStore,
 	size = new ofxTweakbarBarData(this, "bardata_opened");
 	size->setType(OFX_TW_TYPE_BAR_OPENED);
 	variables["bardata_opened"] = size;
+	
+	listener = 0;
 }
 
 ofxTweakbar::~ofxTweakbar() {
@@ -88,6 +90,11 @@ ofxTweakbar* ofxTweakbar::setPosition(float nX, float nY) {
 // load stored state
 ofxTweakbar* ofxTweakbar::load() {
 	tweakbars->load(this);
+}
+
+// store state
+ofxTweakbar* ofxTweakbar::store() {
+	tweakbars->store(this);
 }
 
 TwBar* ofxTweakbar::getBar() {
@@ -230,6 +237,16 @@ ofxTweakbar* ofxTweakbar::close() {
 ofxTweakbar* ofxTweakbar::refresh() {
 	TwRefreshBar(getBar());
 	return this;
+}
+
+void ofxTweakbar::changed()
+{
+	if(listener)
+		listener->onChange(this);
+}
+void ofxTweakbar::addListener(ofxTweakbarListener* pListener)
+{
+	listener = pListener;
 }
 
 

@@ -11,12 +11,13 @@ public:
 	static void draw();
 	static void toggle();
 	void load(ofxTweakbar* pBar);
+	void store(ofxTweakbar* pBar);
 private:
 	ofxTweakbars();
 	~ofxTweakbars(); 
 	void init();
 	void autoStore();
-	
+	void changed();
 	
 	std::map<std::string, ofxTweakbar*> bars;
 	bool visible;
