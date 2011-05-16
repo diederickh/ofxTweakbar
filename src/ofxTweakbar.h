@@ -4,6 +4,7 @@
 #include <string>
 #include <map>
 #include "ofxTweakbarTypes.h"
+#include "ofxTweakbarListener.h"
 
 class ofxTweakbars;
 
@@ -98,10 +99,15 @@ public:
 
 	ofxTweakbar* load(); 
 	
+	ofxTweakbar* store();
+	
 	std::map<std::string, ofxTweakbarType*> getVariables();
 	std::string getName();
 	TwBar* getBar();
 	bool useAutoStore();
+	
+	void changed();
+	void addListener(ofxTweakbarListener* pListener);
 
 private:
 	int testval;
@@ -115,5 +121,7 @@ private:
 	std::string name;
 	TwBar* bar;
 	std::map<std::string, ofxTweakbarType*> variables;
+	
+	ofxTweakbarListener * listener;
 };
 #endif

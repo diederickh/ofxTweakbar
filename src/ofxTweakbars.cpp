@@ -67,10 +67,21 @@ void ofxTweakbars::autoStore() {
 		++it;
 	}
 }
+void ofxTweakbars::changed() {
+	std::map<std::string, ofxTweakbar*>::iterator it = instance.bars.begin();
+	while(it != instance.bars.end()) {
+		it->second->changed();
+		++it;
+	}
+}
 
 void ofxTweakbars::load(ofxTweakbar* pBar) {
 	simple_storage.setBar(pBar);
 	simple_storage.retrieve();
+}
+void ofxTweakbars::store(ofxTweakbar* pBar) {
+	simple_storage.setBar(pBar);
+	simple_storage.store();
 }
 
 // EVENT HANDLERS
@@ -102,7 +113,7 @@ void ofxTweakbars::keyPressed(ofKeyEventArgs& rArgs) {
 	else if (rArgs.key == ',') {
 		toggle();
 	}
-	
+	changed();
 }
 
 void ofxTweakbars::mouseMoved(ofMouseEventArgs& rArgs) {
@@ -113,17 +124,20 @@ void ofxTweakbars::mousePressed(ofMouseEventArgs& rArgs) {
 	TwMouseButtonID btn = (rArgs.button == 0) ? TW_MOUSE_LEFT : TW_MOUSE_RIGHT;
 	TwMouseButton(TW_MOUSE_PRESSED, btn);
 	//autoStore();
+	changed();
 }
 
 void ofxTweakbars::mouseReleased(ofMouseEventArgs& rArgs) {
 	TwMouseButtonID btn = (rArgs.button == 0) ? TW_MOUSE_LEFT : TW_MOUSE_RIGHT;
 	TwMouseButton(TW_MOUSE_RELEASED, btn);
 	//autoStore();
+	changed();
 }
 
 void ofxTweakbars::mouseDragged(ofMouseEventArgs& rArgs) {
 	TwMouseMotion(rArgs.x, rArgs.y);
 	//autoStore();
+	changed();
 }
 
 void ofxTweakbars::windowResized(ofResizeEventArgs& rArgs) {
