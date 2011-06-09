@@ -5,6 +5,7 @@
 #include <sstream>
 #include <fstream>
 #include "Poco/Path.h"
+#include "Poco/File.h"
 #include "Poco/Platform.h"
 
 ofxTweakbarSimpleStorage::ofxTweakbarSimpleStorage(ofxTweakbar* pBar)
