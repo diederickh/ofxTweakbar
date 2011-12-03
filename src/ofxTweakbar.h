@@ -12,6 +12,11 @@ public:
 	ofxTweakbar(std::string sName, std::string sTitle, bool bUseAutoStore, ofxTweakbars* pTweakbars, bool isGlobal = false);
 	~ofxTweakbar();
 	
+	enum ButtonAlign {
+		 LEFT = 1
+		,CENTER = 2
+		,RIGHT = 3
+	};
 	
 	ofxTweakbarFloat* addFloat(
 			 const char* pName
@@ -95,7 +100,7 @@ public:
 	
 	
 	// -- testing custom types -- 
-	void test(const char* pName , void* pValue);
+//	void test(const char* pName , void* pValue);
 	/**
 	    example of adding a callback, where we have "ofxTweakbar* bar"
 		=============================================================
@@ -143,10 +148,14 @@ public:
 	ofxTweakbar* setLabel(std::string sLabel);
 	
 	ofxTweakbar* setPosition(float nX, float nY);
+	
+	ofxTweakbar* setButtonAlign(int align);
+
 
 	ofxTweakbar* load(); 
 	
 	ofxTweakbar* setValuesWidth(int nWidth);
+	ofxTweakbar* fitValues(); 
 	
 	std::map<std::string, ofxTweakbarType*> getVariables();
 	std::string getName();

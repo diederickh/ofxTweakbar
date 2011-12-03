@@ -75,6 +75,9 @@ void ofxTweakbar::init() {
 	values_width->setType(OFX_TW_TYPE_BAR_VALUES_WIDTH);
 	variables["bardata_valueswidth"] = values_width;
 	
+	// make sure the gui doesnt leave the window.
+	TwDefine(" GLOBAL contained=true ");
+	
 	setColor(44,44,44,200);
 	setFontSize(2);
 }
@@ -142,6 +145,12 @@ ofxTweakbar* ofxTweakbar::setPosition(float nX, float nY) {
 ofxTweakbar* ofxTweakbar::setValuesWidth(int nWidth) {
 	ostringstream oss;
 	oss << getName() << " valueswidth='" << nWidth << "'";
+	TwDefine(oss.str().c_str());
+}
+
+ofxTweakbar* ofxTweakbar::fitValues() {
+	ostringstream oss;
+	oss << getName() << " valueswidth='fit'";	
 	TwDefine(oss.str().c_str());
 }
 
@@ -328,6 +337,8 @@ ofxTweakbarList* ofxTweakbar::addList(
 	return addList(pName, &pValue, pDef);
 }
 
+// we assume pDef has a value like: "option one, option two, option three"
+// or, you can use the addOption function of ofxTweakbarList.
 ofxTweakbarList* ofxTweakbar::addList(
 		const char* pName
 		,void* pValue
@@ -335,7 +346,14 @@ ofxTweakbarList* ofxTweakbar::addList(
 )
 {
 	checkInit();
+
 	ofxTweakbarList* type = new ofxTweakbarList(this, pName, pValue, pDef);
+
+	// since 1.14 we have TwDefineEnumFromString.
+	TwType enum_type;
+	enum_type = TwDefineEnumFromString(pName, pDef);
+	TwAddVarRW(bar, type->getName(),enum_type, pValue, NULL);
+
 	variables[type->getName()] = type;
 	return type;
 }
@@ -415,6 +433,15 @@ ofxTweakbarFiles* ofxTweakbar::getFile(string sName) {
 	return NULL;
 }
 
-void ofxTweakbar::test(const char* pName, void* pValue) {
-	TwAddVarRW(bar, pName, TW_TYPE_PIXELDATA, pValue, "");
+ofxTweakbar* ofxTweakbar::setButtonAlign(int align) {
+	string bt_align = "GLOBAL buttonalign=left";
+	if(align == CENTER) {
+		bt_align = "GLOBAL buttonalign=center";
+	}
+	else if(align == RIGHT) {
+		bt_align = "GLOBAL buttonalign=right";
+	}
+	TwDefine(bt_align.c_str());
+	return this;
 }
+
