@@ -34,10 +34,12 @@ string ofxTweakbarSimpleStorage::getPath() {
 			filepath = "data/" +getBar()->getFileName();
 		}
 	}
+	cout << filepath << endl;
 	return filepath;
 }
 
 void ofxTweakbarSimpleStorage::store() {
+
 	std::map<std::string, ofxTweakbarType*> vars = getBar()->getVariables();
 	std::map<std::string, ofxTweakbarType*>::iterator it = vars.begin();
 	ofxTweakbarType* type = NULL;

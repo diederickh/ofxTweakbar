@@ -4,18 +4,32 @@
 #include <string>
 #include <map>
 #include "ofxTweakbarTypes.h"
-
-class ofxTweakbars;
+#include "ofxTweakbars.h"
+//class ofxTweakbars;
 
 class ofxTweakbar {
 public:	
-	ofxTweakbar(std::string sName, std::string sTitle, bool bUseAutoStore, ofxTweakbars* pTweakbars);
+	ofxTweakbar(std::string sName, std::string sTitle, bool bUseAutoStore, ofxTweakbars* pTweakbars, bool isGlobal = false);
 	~ofxTweakbar();
 	
+	
+	ofxTweakbarFloat* addFloat(
+			 const char* pName
+			,float& pValue
+			,const char* pDef = "min=0 max=1 step=0.01"
+	);
+	
+
 	ofxTweakbarFloat* addFloat(
 			 const char* pName
 			,void* pValue
 			,const char* pDef = "min=0 max=1 step=0.01"
+	);
+	
+	ofxTweakbarBool* addBool(
+		const char* pName
+		,bool& pValue
+		,const char* pDef = ""
 	);
 	ofxTweakbarBool* addBool(
 			const char* pName
@@ -49,6 +63,11 @@ public:
 	
 	ofxTweakbarString* addString(
 			const char* pName
+			,string& pValue
+			,const char* pDef = ""
+	);
+	ofxTweakbarString* addString(
+			const char* pName
 			,void *pValue
 			,const char* pDef = ""
 	);
@@ -66,6 +85,8 @@ public:
 	
 	ofxTweakbar* addLoader(string sPath = "", string sExt = "*.dat");
 	ofxTweakbar* addSaver();
+	
+	void draw();
 	
 	// Getters: still under review!
 	//--------------------------------------------------------------------------
@@ -92,6 +113,12 @@ public:
 			const char* pName
 			,TwButtonCallback fCallback
 			,void* pClientData = NULL
+			,const char* pDef = ""
+	);
+	
+	ofxTweakbarList* addList(
+			const char* pName
+			,int& pValue
 			,const char* pDef = ""
 	);
 	
@@ -128,8 +155,15 @@ public:
 	TwBar* getBar();
 	bool useAutoStore();
 	
-std::map<std::string, ofxTweakbarType*> variables;
+	std::map<std::string, ofxTweakbarType*> variables;
+	
+	inline bool isGlobal() {
+		return is_global;
+	}
+	
 private:
+	void init(); // only for special global object.
+	void checkInit(); // only for special global object.
 	int testval;
 	ofxTweakbarBarData* position;
 	ofxTweakbarBarData* size;
@@ -138,10 +172,13 @@ private:
 	
 	ofxTweakbars* tweakbars;
 	bool use_autostore;
+	bool is_global;
 	std::string title;
 	std::string name;
 	std::string filename;
 	TwBar* bar;
+
 	
 };
+static ofxTweakbar gui((string)"settings",(string)"settings",true,ofxTweakbars::getInstance(),true);
 #endif

@@ -8,28 +8,32 @@ ofxTweakbars::ofxTweakbars()
 :simple_storage(NULL)
 ,is_initialized(false)
 {
+	
 }
 
 ofxTweakbars::~ofxTweakbars() {
 	std::map<std::string, ofxTweakbar*>::iterator it = ofxTweakbars::bars.begin();
 	while(it != bars.end()) {
-		delete it->second;
+		if(!it->second->isGlobal()) {
+			delete it->second;
+		}
 		it++;
 	}
 }
 
 ofxTweakbar* ofxTweakbars::create(std::string sName, std::string sTitle, bool bUseAutoStore) {
-	if(!instance.is_initialized) {
-		instance.init();
-	}
 	ofxTweakbar* bar = new ofxTweakbar(sName, sTitle, bUseAutoStore,&instance);
-
-	// some defaults.
-	bar	->setColor(44,44,44,200)
-		->setFontSize(2);
 	instance.bars[sName] = bar;
 	return bar;
 };
+
+void ofxTweakbars::addTweakbarToList(string sName, ofxTweakbar* pBar){
+	instance.bars[sName] = pBar;
+}
+
+bool ofxTweakbars::isInitialized() {
+	return is_initialized;
+}
 
 void ofxTweakbars::init() {
 	visible = true;
@@ -42,7 +46,14 @@ void ofxTweakbars::init() {
 
 }
 
+bool ofxTweakbars::isVisible() {
+	return instance.visible;
+}
+
 void ofxTweakbars::draw() {
+	if(!instance.is_initialized) {
+		instance.init();
+	}
 	if(instance.visible)
 		TwDraw();
 }
@@ -86,7 +97,7 @@ void ofxTweakbars::save(ofxTweakbar* pBar, string sFileName) {
 }
 
 void ofxTweakbars::load(ofxTweakbar* pBar, string sFileName) {
-	string curr_filename = pBar->getFileName();
+	string curr_filename = pBar->getFileName();;
 	if(sFileName != "") {
 		pBar->setFileName(sFileName);
 	}
@@ -171,3 +182,4 @@ void ofxTweakbars::mouseDragged(ofMouseEventArgs& rArgs) {
 void ofxTweakbars::windowResized(ofResizeEventArgs& rArgs) {
 	TwWindowSize(rArgs.width, rArgs.height);
 }
+

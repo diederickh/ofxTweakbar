@@ -16,27 +16,43 @@ void TW_CALL ofxtweakbar_saveclick(void* pTweakbar) {
 	ofxTweakbars::save(bar, bar->getString("ofxtweakbar_fileame"));
 }
 
-ofxTweakbar::ofxTweakbar(std::string sName, std::string sTitle, bool bAutoStore, ofxTweakbars* pTweakbars)
+ofxTweakbar::ofxTweakbar(
+	 std::string sName
+	,std::string sTitle
+	,bool bAutoStore
+	,ofxTweakbars* pTweakbars
+	,bool isGlobal
+)
 :name(sName) // TODO maybe a bit redundant (used by storages)
 ,title(sTitle)
 ,use_autostore(bAutoStore)
 ,tweakbars(pTweakbars)
+,is_global(isGlobal)
 {
+	// is_global is a kind of hackery flag. I added a global "gui" instance
+	// which actually can only be created after ofxTweakbars (note the "s") 
+	// has been initialized. I had to add some swizzles to check this).
+	if(!is_global) {
+		init();
+	}
+}
 
+void ofxTweakbar::init() {
 	// make sure to remove non-alpha chars from the tweakbar name
 	std::string clean_name;
-	for(int i = 0; i < sName.size(); ++i) {
-		if(isalnum(sName[i])) {
-			clean_name.push_back(sName[i]);
+	for(int i = 0; i < name.size(); ++i) {
+		if(isalnum(name[i])) {
+			clean_name.push_back(name[i]);
 		}
 	}
+
 	if(clean_name.size() == 0) {
 		throw "Error while creating a tweakbar; use a normal name :)";
 	}
 	name = clean_name;
 	filename = name +".dat";
 	bar = TwNewBar(name.c_str());
-	setLabel(sTitle);
+	setLabel(title);
 	
 	// TODO: We need only one BarData and let it store all properties!!
 	// create a data storage for the position.
@@ -58,13 +74,33 @@ ofxTweakbar::ofxTweakbar(std::string sName, std::string sTitle, bool bAutoStore,
 	values_width = new ofxTweakbarBarData(this, "bardata_valueswidth");
 	values_width->setType(OFX_TW_TYPE_BAR_VALUES_WIDTH);
 	variables["bardata_valueswidth"] = values_width;
+	
+	setColor(44,44,44,200);
+	setFontSize(2);
 }
 
+// TODO figure out how to handle the global gui object
 ofxTweakbar::~ofxTweakbar() {
-	std::map<std::string, ofxTweakbarType*>::iterator it =  variables.begin();
+	std::map<std::string, ofxTweakbarType*>::iterator it = variables.begin();
 	while(it != variables.end()) {
 		delete it->second;
 		++it;
+	}
+}
+
+void ofxTweakbar::draw() {
+	if(!is_global) {
+		return;
+	}
+	checkInit();
+	ofxTweakbars::draw();
+}
+
+void ofxTweakbar::checkInit() {
+	if(!ofxTweakbars::getInstance()->isInitialized()) {
+		ofxTweakbars::getInstance()->init();
+		ofxTweakbars::getInstance()->addTweakbarToList(name, this);
+		init();
 	}
 }
 
@@ -119,15 +155,35 @@ TwBar* ofxTweakbar::getBar() {
 }
 
 ofxTweakbarFloat* ofxTweakbar::addFloat(
+	 const char* pName
+	,float& pValue
+	,const char* pDef
+)
+{
+	return addFloat(pName, &pValue, pDef);
+}
+
+ofxTweakbarFloat* ofxTweakbar::addFloat(
 		const char* pName
 		,void* pValue
 		,const char* pDef
 ) 
 {
+	checkInit();
 	ofxTweakbarFloat* type = new ofxTweakbarFloat(this, pName, pValue);
 	TwAddVarRW(bar, type->getName(), TW_TYPE_FLOAT, pValue, pDef);
 	variables[type->getName()] = type;
+	type->setLabel(pName);
 	return type;
+}
+
+ofxTweakbarBool* ofxTweakbar::addBool(
+	const char* pName
+	,bool& pValue
+	,const char* pDef
+)
+{
+	return addBool(pName, &pValue, pDef);
 }
 
 ofxTweakbarBool* ofxTweakbar::addBool(
@@ -136,9 +192,11 @@ ofxTweakbarBool* ofxTweakbar::addBool(
 		,const char* pDef
 )
 {
+	checkInit();
 	ofxTweakbarBool* type = new ofxTweakbarBool(this, pName, pValue);
 	TwAddVarRW(bar, type->getName(), TW_TYPE_BOOLCPP, pValue, pDef);
 	variables[type->getName()] = type;
+	type->setLabel(pName);
 	return type;
 }
 
@@ -148,6 +206,7 @@ ofxTweakbarInt* ofxTweakbar::addInt(
 		,const char* pDef
 )
 {
+	checkInit();
 	ofxTweakbarInt* type = new ofxTweakbarInt(this, pName, pValue);
 	TwAddVarRW(bar,type->getName(), TW_TYPE_INT32, pValue, pDef);
 	variables[type->getName()] = type;
@@ -160,10 +219,11 @@ ofxTweakbarVec3f* ofxTweakbar::addVec3f(
 		,const char* pDef 
 )
 {
-
+	checkInit();
 	ofxTweakbarVec3f* type = new ofxTweakbarVec3f(this, pName, pValue);
 	TwAddVarRW(bar, type->getName(), TW_TYPE_DIR3F, pValue,pDef);
 	variables[type->getName()] = type;
+	type->setLabel(pName);
 	return type;
 }
 
@@ -173,9 +233,11 @@ ofxTweakbarQuat4f* ofxTweakbar::addQuat4f(
 		,const char *pDef
 ) 
 {
+	checkInit();
 	ofxTweakbarQuat4f* type = new ofxTweakbarQuat4f(this, pName, pValue);
 	TwAddVarRW(bar, type->getName(), TW_TYPE_QUAT4F, pValue,pDef);
 	variables[type->getName()] = type;
+	type->setLabel(pName);
 	return type;
 }
 
@@ -186,10 +248,21 @@ ofxTweakbarColor3f* ofxTweakbar::addColor3f(
 		,const char *pDef
 )
 {
+	checkInit();
 	ofxTweakbarColor3f* type = new ofxTweakbarColor3f(this, pName, pValue);
 	TwAddVarRW(bar, type->getName(), TW_TYPE_COLOR3F, pValue, pDef);
 	variables[type->getName()] = type;
+	type->setLabel(pName);
 	return type;
+}
+
+ofxTweakbarString* ofxTweakbar::addString(
+	const char* pName
+	,string& pValue
+	,const char* pDef 
+)
+{	
+	return addString(pName, &pValue, pDef);
 }
 
 ofxTweakbarString* ofxTweakbar::addString(
@@ -198,9 +271,11 @@ ofxTweakbarString* ofxTweakbar::addString(
 	,const char* pDef 
 )
 {
+	checkInit();
 	ofxTweakbarString* type = new ofxTweakbarString(this, pName, pValue);
 	variables[type->getName()] = type;
 	TwAddVarRW(bar, type->getName(), TW_TYPE_STDSTRING, pValue, pDef);
+	type->setLabel(pName);
 	return type;
 }
 
@@ -210,6 +285,7 @@ ofxTweakbarFiles* ofxTweakbar::addFiles(
 		,const char* pDef 
 )
 {
+	checkInit();
 	ofxTweakbarFiles* type = new ofxTweakbarFiles(this, pName, pValue, pDef);
 	variables[type->getName()] = type;
 	return type;
@@ -220,6 +296,7 @@ ofxTweakbarSeparator* ofxTweakbar::addSeparator(
 		,const char* pDef 
 ) 
 {
+	checkInit();
 	ofxTweakbarSeparator* type = new ofxTweakbarSeparator(this, pName);
 	variables[type->getName()] = type;
 	TwAddSeparator(bar, type->getName(), pDef);
@@ -233,10 +310,22 @@ ofxTweakbarButton* ofxTweakbar::addButton(
 		,const char* pDef 
 )
 {
+	checkInit();
 	ofxTweakbarButton* type = new ofxTweakbarButton(this, pName);
 	TwAddButton(bar, type->getName(), fCallback, pClientData, pDef);
 	variables[type->getName()] = type;
+	type->setLabel(pName);
 	return type;
+}
+
+
+ofxTweakbarList* ofxTweakbar::addList(
+		const char* pName
+		,int& pValue
+		,const char* pDef 
+)
+{
+	return addList(pName, &pValue, pDef);
 }
 
 ofxTweakbarList* ofxTweakbar::addList(
@@ -245,6 +334,7 @@ ofxTweakbarList* ofxTweakbar::addList(
 		,const char* pDef 
 )
 {
+	checkInit();
 	ofxTweakbarList* type = new ofxTweakbarList(this, pName, pValue, pDef);
 	variables[type->getName()] = type;
 	return type;
@@ -254,6 +344,7 @@ ofxTweakbar* ofxTweakbar::addLoader(string sPath, string sExt) {
 	if(sPath == "") {
 		sPath = ofToDataPath(".", true);
 	}
+	checkInit();
 	addFiles("ofxtweakbar_file", NULL)
 		->setPath(sPath,sExt)
 		->create()
@@ -263,6 +354,7 @@ ofxTweakbar* ofxTweakbar::addLoader(string sPath, string sExt) {
 }
 
 ofxTweakbar* ofxTweakbar::addSaver() {
+	checkInit();
 	addString("ofxtweakbar_filename",&filename)->setLabel("Save settings as");
 	addButton("Save", ofxtweakbar_saveclick, this)->setLabel("SAVE");
 	return this;

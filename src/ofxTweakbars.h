@@ -17,11 +17,14 @@ public:
 	static void load(ofxTweakbar* pBar, string sFileName = "");
 	void setEventHandlers();
 	void unsetEventHandlers();
-
+	void init();
+	bool isInitialized();
+	static bool isVisible();
+	void addTweakbarToList(string sName, ofxTweakbar* pBar); //only for global instance
 private:
 	ofxTweakbars();
 	~ofxTweakbars(); 
-	void init();
+
 	void autoStore();
 	
 

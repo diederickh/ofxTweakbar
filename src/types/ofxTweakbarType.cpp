@@ -2,13 +2,13 @@
 #include "ofxTweakbarType.h"
 #include "ofxTweakbar.h"
 #include "Poco/String.h"
-#include "Poco/RegularExpression.h"
+//#include "Poco/RegularExpression.h"
 
 using Poco::toUpper;
 using Poco::toLower;
 using Poco::toLowerInPlace;
 using Poco::trimInPlace;
-using Poco::RegularExpression;
+//using Poco::RegularExpression;
 
 ofxTweakbarType::ofxTweakbarType(ofxTweakbar* pBar, string pName, void* pValue)
 :bar(pBar)
@@ -17,8 +17,16 @@ ofxTweakbarType::ofxTweakbarType(ofxTweakbar* pBar, string pName, void* pValue)
 {
 	trimInPlace(name);
 	toLowerInPlace(name);
-	RegularExpression re("[^0-9a-z]+");
-	re.subst(name, "_");
+	string clean_name;
+	for(int i = 0; i < name.size(); ++i) {
+		if(isalnum(name[i])) {
+			clean_name.push_back(name[i]);
+		}
+		else {
+			clean_name.push_back('_');
+		}
+	}
+	name = clean_name;
 }
 
 ofxTweakbar* ofxTweakbarType::getBar() {
