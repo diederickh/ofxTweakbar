@@ -150,11 +150,19 @@ public:
 	ofxTweakbar* setPosition(float nX, float nY);
 	
 	ofxTweakbar* setButtonAlign(int align);
+	
+	ofxTweakbar* setIconifiable(bool flag);
+	
+	ofxTweakbar* setMovable(bool flag);
+	
+	ofxTweakbar* setResizable(bool flag);
 
+	ofxTweakbar* setFontResizable(bool flag);
 
 	ofxTweakbar* load(); 
 	
 	ofxTweakbar* setValuesWidth(int nWidth);
+	
 	ofxTweakbar* fitValues(); 
 	
 	std::map<std::string, ofxTweakbarType*> getVariables();

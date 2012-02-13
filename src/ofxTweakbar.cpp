@@ -128,6 +128,35 @@ ofxTweakbar* ofxTweakbar::setFontSize(int nSize) {
 	return this;
 }
 
+
+ofxTweakbar* ofxTweakbar::setIconifiable(bool flag) {
+	ostringstream oss; 
+	oss << getName() << " iconifiable=" << ((flag) ? "true" : "false");
+	TwDefine(oss.str().c_str());
+	return this;
+}
+
+ofxTweakbar* ofxTweakbar::setMovable(bool flag) {
+	ostringstream oss; 
+	oss << getName() << " moveable=" << ((flag) ? "true" : "false");
+	TwDefine(oss.str().c_str());
+	return this;
+}
+
+ofxTweakbar* ofxTweakbar::setResizable(bool flag) {
+	ostringstream oss; 
+	oss << getName() << " resizable=" << ((flag) ? "true" : "false");
+	TwDefine(oss.str().c_str());
+	return this;
+}
+
+ofxTweakbar* ofxTweakbar::setFontResizable(bool flag) {
+	ostringstream oss; 
+	oss << getName() << " fontresizable=" << ((flag) ? "true" : "false");
+	TwDefine(oss.str().c_str());
+	return this;
+}
+
 ofxTweakbar* ofxTweakbar::setLabel(std::string sLabel) {
 	ostringstream oss;
 	oss << getName() << " label='" << sLabel << "'";
