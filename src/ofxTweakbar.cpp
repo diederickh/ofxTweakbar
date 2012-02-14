@@ -138,7 +138,7 @@ ofxTweakbar* ofxTweakbar::setIconifiable(bool flag) {
 
 ofxTweakbar* ofxTweakbar::setMovable(bool flag) {
 	ostringstream oss; 
-	oss << getName() << " moveable=" << ((flag) ? "true" : "false");
+	oss << getName() << " movable=" << ((flag) ? "true" : "false");
 	TwDefine(oss.str().c_str());
 	return this;
 }
@@ -237,6 +237,17 @@ ofxTweakbarBool* ofxTweakbar::addBool(
 	type->setLabel(pName);
 	return type;
 }
+
+
+ofxTweakbarInt* ofxTweakbar::addInt(
+		const char* pName
+		,int& pValue
+		,const char* pDef
+)
+{	
+	return addInt(pName, &pValue, pDef);
+}
+	
 
 ofxTweakbarInt* ofxTweakbar::addInt(
 		 const char* pName

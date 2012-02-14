@@ -24,7 +24,6 @@ public:
 			,const char* pDef = "min=0 max=1 step=0.01"
 	);
 	
-
 	ofxTweakbarFloat* addFloat(
 			 const char* pName
 			,void* pValue
@@ -40,6 +39,12 @@ public:
 			const char* pName
 			,void *pValue
 			,const char* pDef = ""
+	);
+	
+	ofxTweakbarInt* addInt(
+			const char* pName
+			,int& pValue
+			,const char* pDef = "min=0 max=10 step=1"
 	);
 	
 	ofxTweakbarInt* addInt(
