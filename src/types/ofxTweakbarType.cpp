@@ -76,6 +76,12 @@ ofxTweakbarType* ofxTweakbarType::setMax(std::string sMax) {
 	return this;
 }
 
+ofxTweakbarType* ofxTweakbarType::setColorMode(std::string sColorMode) {
+	TwSetParam(bar->getBar(), name.c_str(), "colormode", TW_PARAM_CSTRING, 1, sColorMode.c_str());
+	properties["colormode"] = sColorMode;
+	return this;
+}
+
 ofxTweakbarType* ofxTweakbarType::setLabel(std::string sLabel) {
 	TwSetParam(bar->getBar(), name.c_str(), "label", TW_PARAM_CSTRING, 1, sLabel.c_str());
 	properties["label"] = sLabel;
