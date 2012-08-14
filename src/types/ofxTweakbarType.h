@@ -33,6 +33,7 @@ class ofxTweakbar;
 class ofxTweakbarType {
 public:
 	ofxTweakbarType(ofxTweakbar* pBar, std::string pName, void* pValue);
+    virtual ~ofxTweakbarType() {}
 	virtual OFX_TW_TYPE getType() = 0;
 
 	template<typename T>
