@@ -124,21 +124,21 @@ void ofxTweakbars::autoStore() {
 // EVENT HANDLERS
 //------------------------------------------------------------------------------
 void ofxTweakbars::setEventHandlers() {
-	ofAddListener(ofEvents.keyPressed,		this, &ofxTweakbars::keyPressed);
-	ofAddListener(ofEvents.mouseMoved,		this, &ofxTweakbars::mouseMoved);
-	ofAddListener(ofEvents.mousePressed,	this, &ofxTweakbars::mousePressed);
-	ofAddListener(ofEvents.mouseReleased,	this, &ofxTweakbars::mouseReleased);
-	ofAddListener(ofEvents.mouseDragged,	this, &ofxTweakbars::mouseDragged);
-	ofAddListener(ofEvents.windowResized,	this, &ofxTweakbars::windowResized);
+	ofAddListener(ofEvents().keyPressed,	this, &ofxTweakbars::keyPressed);
+	ofAddListener(ofEvents().mouseMoved,	this, &ofxTweakbars::mouseMoved);
+	ofAddListener(ofEvents().mousePressed,	this, &ofxTweakbars::mousePressed);
+	ofAddListener(ofEvents().mouseReleased,	this, &ofxTweakbars::mouseReleased);
+	ofAddListener(ofEvents().mouseDragged,	this, &ofxTweakbars::mouseDragged);
+	ofAddListener(ofEvents().windowResized,	this, &ofxTweakbars::windowResized);
 }
 
 
 void ofxTweakbars::unsetEventHandlers() {
-	ofRemoveListener(ofEvents.mouseMoved,		this, &ofxTweakbars::mouseMoved);
-	ofRemoveListener(ofEvents.mousePressed,		this, &ofxTweakbars::mousePressed);
-	ofRemoveListener(ofEvents.mouseReleased,	this, &ofxTweakbars::mouseReleased);
-	ofRemoveListener(ofEvents.mouseDragged,		this, &ofxTweakbars::mouseDragged);
-	ofRemoveListener(ofEvents.windowResized,	this, &ofxTweakbars::windowResized);
+	ofRemoveListener(ofEvents().mouseMoved,		this, &ofxTweakbars::mouseMoved);
+	ofRemoveListener(ofEvents().mousePressed,	this, &ofxTweakbars::mousePressed);
+	ofRemoveListener(ofEvents().mouseReleased,	this, &ofxTweakbars::mouseReleased);
+	ofRemoveListener(ofEvents().mouseDragged,	this, &ofxTweakbars::mouseDragged);
+	ofRemoveListener(ofEvents().windowResized,	this, &ofxTweakbars::windowResized);
 }
 
 void ofxTweakbars::keyPressed(ofKeyEventArgs& rArgs) {

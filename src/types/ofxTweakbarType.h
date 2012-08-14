@@ -33,6 +33,7 @@ class ofxTweakbar;
 class ofxTweakbarType {
 public:
 	ofxTweakbarType(ofxTweakbar* pBar, std::string pName, void* pValue);
+    virtual ~ofxTweakbarType() {}
 	virtual OFX_TW_TYPE getType() = 0;
 
 	template<typename T>
@@ -77,6 +78,13 @@ public:
 		ss << t;
 		return setMax(ss.str());
 	}
+
+    template<typename T>
+	ofxTweakbarType* setColorMode(T t) {
+		stringstream ss;
+		ss << t;
+		return setColorMode(ss.str());
+	}
 	
 	template<typename T>
 	ofxTweakbarType* setLabel(T t) {
@@ -112,6 +120,7 @@ public:
 	virtual ofxTweakbarType* setStep(std::string sStep);
 	virtual ofxTweakbarType* setMin(std::string sMin);
 	virtual ofxTweakbarType* setMax(std::string sMax);
+    virtual ofxTweakbarType* setColorMode(std::string sColorMode);
 	virtual ofxTweakbarType* setLabel(std::string sLabel);
 	virtual ofxTweakbarType* setGroup(std::string sGroup);
 	virtual ofxTweakbarType* setPrecision(std::string sPrecision);
